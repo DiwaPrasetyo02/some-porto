@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
 import { getProjects, adminCreateProject, adminUpdateProject, adminDeleteProject } from '../../../services/api';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import Toast from '../../../components/Toast';
+import ImagePreview from '../../../components/ImagePreview';
+import LoadingSpinner from '../../../components/LoadingSpinner';
 
 const ProjectManager = ({ onUpdate }) => {
   const [projects, setProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'info' });
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -22,28 +27,41 @@ const ProjectManager = ({ onUpdate }) => {
     loadProjects();
   }, []);
 
+  const showToast = (message, type = 'info') => {
+    setToast({ show: true, message, type });
+  };
+
   const loadProjects = async () => {
+    setLoading(true);
     try {
       const response = await getProjects();
       setProjects(response.data);
     } catch (error) {
       console.error('Error loading projects:', error);
+      showToast('Failed to load projects', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       if (editingItem) {
         await adminUpdateProject(editingItem.id, formData);
+        showToast('Project updated successfully!', 'success');
       } else {
         await adminCreateProject(formData);
+        showToast('Project created successfully!', 'success');
       }
       closeModal();
       loadProjects();
       if (onUpdate) onUpdate();
     } catch (error) {
-      alert('Failed to save project');
+      showToast('Failed to save project', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,12 +73,16 @@ const ProjectManager = ({ onUpdate }) => {
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
+      setLoading(true);
       try {
         await adminDeleteProject(id);
+        showToast('Project deleted successfully!', 'success');
         loadProjects();
         if (onUpdate) onUpdate();
       } catch (error) {
-        alert('Failed to delete project');
+        showToast('Failed to delete project', 'error');
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -83,31 +105,44 @@ const ProjectManager = ({ onUpdate }) => {
 
   return (
     <div className="manager-container">
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.show}
+        onClose={() => setToast({ ...toast, show: false })}
+      />
+
       <div className="manager-header">
         <h2>Projects</h2>
-        <button className="btn-primary" onClick={() => setShowModal(true)}>
+        <button className="btn-primary" onClick={() => setShowModal(true)} disabled={loading}>
           Add New Project
         </button>
       </div>
 
-      <div className="item-list">
-        {projects.map((item) => (
-          <div key={item.id} className="item-card">
-            <div>
-              <h3>{item.title} {item.featured && <span style={{color: '#f39c12'}}>★</span>}</h3>
-              <p>{item.short_description}</p>
+      {loading && projects.length === 0 ? (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}>
+          <LoadingSpinner size="lg" />
+        </div>
+      ) : (
+        <div className="item-list">
+          {projects.map((item) => (
+            <div key={item.id} className="item-card">
+              <div>
+                <h3>{item.title} {item.featured && <span style={{color: 'var(--color-warning)'}}>★</span>}</h3>
+                <p>{item.short_description}</p>
+              </div>
+              <div className="item-actions">
+                <button className="btn-secondary" onClick={() => handleEdit(item)} disabled={loading}>
+                  <FaEdit />
+                </button>
+                <button className="btn-danger" onClick={() => handleDelete(item.id)} disabled={loading}>
+                  <FaTrash />
+                </button>
+              </div>
             </div>
-            <div className="item-actions">
-              <button className="btn-secondary" onClick={() => handleEdit(item)}>
-                <FaEdit />
-              </button>
-              <button className="btn-danger" onClick={() => handleDelete(item.id)}>
-                <FaTrash />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {showModal && (
         <div className="modal" onClick={closeModal}>
@@ -149,7 +184,13 @@ const ProjectManager = ({ onUpdate }) => {
                   type="url"
                   value={formData.image || ''}
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                  placeholder="https://example.com/image.jpg or LinkedIn image URL"
                 />
+                {formData.image && (
+                  <div style={{ marginTop: '12px' }}>
+                    <ImagePreview url={formData.image} alt="Project preview" />
+                  </div>
+                )}
               </div>
               <div className="form-group">
                 <label>Technologies (comma-separated)</label>
@@ -194,11 +235,18 @@ const ProjectManager = ({ onUpdate }) => {
                 />
               </div>
               <div className="form-actions">
-                <button type="button" className="btn-secondary" onClick={closeModal}>
+                <button type="button" className="btn-secondary" onClick={closeModal} disabled={loading}>
                   Cancel
                 </button>
-                <button type="submit" className="btn-primary">
-                  {editingItem ? 'Update' : 'Create'}
+                <button type="submit" className="btn-primary" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <LoadingSpinner size="sm" color="white" />
+                      <span style={{ marginLeft: '8px' }}>Saving...</span>
+                    </>
+                  ) : (
+                    editingItem ? 'Update' : 'Create'
+                  )}
                 </button>
               </div>
             </form>

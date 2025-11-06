@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
 import { getStack, adminCreateStack, adminUpdateStack, adminDeleteStack } from '../../../services/api';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import Toast from '../../../components/Toast';
+import ImagePreview from '../../../components/ImagePreview';
+import LoadingSpinner from '../../../components/LoadingSpinner';
 
 const StackManager = ({ onUpdate }) => {
   const [stack, setStack] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'info' });
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -19,29 +24,41 @@ const StackManager = ({ onUpdate }) => {
     loadStack();
   }, []);
 
+  const showToast = (message, type = 'info') => {
+    setToast({ show: true, message, type });
+  };
+
   const loadStack = async () => {
+    setLoading(true);
     try {
       const response = await getStack();
       setStack(response.data);
     } catch (error) {
       console.error('Error loading stack:', error);
+      showToast('Failed to load tech stack', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       if (editingItem) {
         await adminUpdateStack(editingItem.id, formData);
+        showToast('Stack item updated successfully!', 'success');
       } else {
         await adminCreateStack(formData);
+        showToast('Stack item created successfully!', 'success');
       }
       closeModal();
       loadStack();
       if (onUpdate) onUpdate();
     } catch (error) {
-      alert('Failed to save stack item');
+      showToast('Failed to save stack item', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,12 +70,16 @@ const StackManager = ({ onUpdate }) => {
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
+      setLoading(true);
       try {
         await adminDeleteStack(id);
+        showToast('Stack item deleted successfully!', 'success');
         loadStack();
         if (onUpdate) onUpdate();
       } catch (error) {
-        alert('Failed to delete stack item');
+        showToast('Failed to delete stack item', 'error');
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -78,32 +99,45 @@ const StackManager = ({ onUpdate }) => {
 
   return (
     <div className="manager-container">
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.show}
+        onClose={() => setToast({ ...toast, show: false })}
+      />
+
       <div className="manager-header">
         <h2>Tech Stack</h2>
-        <button className="btn-primary" onClick={() => setShowModal(true)}>
+        <button className="btn-primary" onClick={() => setShowModal(true)} disabled={loading}>
           Add New Stack
         </button>
       </div>
 
-      <div className="item-list">
-        {stack.map((item) => (
-          <div key={item.id} className="item-card">
-            <div>
-              <h3>{item.name}</h3>
-              <p>{item.category}</p>
-              {item.proficiency && <p>Proficiency: {item.proficiency}%</p>}
+      {loading && stack.length === 0 ? (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}>
+          <LoadingSpinner size="lg" />
+        </div>
+      ) : (
+        <div className="item-list">
+          {stack.map((item) => (
+            <div key={item.id} className="item-card">
+              <div>
+                <h3>{item.name}</h3>
+                <p>{item.category}</p>
+                {item.proficiency != null && <p>Proficiency: {item.proficiency}%</p>}
+              </div>
+              <div className="item-actions">
+                <button className="btn-secondary" onClick={() => handleEdit(item)} disabled={loading}>
+                  <FaEdit />
+                </button>
+                <button className="btn-danger" onClick={() => handleDelete(item.id)} disabled={loading}>
+                  <FaTrash />
+                </button>
+              </div>
             </div>
-            <div className="item-actions">
-              <button className="btn-secondary" onClick={() => handleEdit(item)}>
-                <FaEdit />
-              </button>
-              <button className="btn-danger" onClick={() => handleDelete(item.id)}>
-                <FaTrash />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {showModal && (
         <div className="modal" onClick={closeModal}>
@@ -137,7 +171,13 @@ const StackManager = ({ onUpdate }) => {
                   type="url"
                   value={formData.icon || ''}
                   onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
+                  placeholder="https://example.com/icon.png"
                 />
+                {formData.icon && (
+                  <div style={{ marginTop: '12px' }}>
+                    <ImagePreview url={formData.icon} alt="Icon preview" />
+                  </div>
+                )}
               </div>
               <div className="form-group">
                 <label>Proficiency (0-100)</label>
@@ -166,11 +206,18 @@ const StackManager = ({ onUpdate }) => {
                 />
               </div>
               <div className="form-actions">
-                <button type="button" className="btn-secondary" onClick={closeModal}>
+                <button type="button" className="btn-secondary" onClick={closeModal} disabled={loading}>
                   Cancel
                 </button>
-                <button type="submit" className="btn-primary">
-                  {editingItem ? 'Update' : 'Create'}
+                <button type="submit" className="btn-primary" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <LoadingSpinner size="sm" color="white" />
+                      <span style={{ marginLeft: '8px' }}>Saving...</span>
+                    </>
+                  ) : (
+                    editingItem ? 'Update' : 'Create'
+                  )}
                 </button>
               </div>
             </form>
