@@ -366,6 +366,8 @@
   justify-content: center;
   z-index: var(--z-modal);
   animation: modalFadeIn var(--transition-base);
+  padding: var(--spacing-lg);
+  overflow-y: auto;
 }
 
 .modal-content {
@@ -373,11 +375,32 @@
   padding: var(--spacing-2xl);
   border-radius: var(--radius-xl);
   max-width: 600px;
-  width: 90%;
-  max-height: 90vh;
+  width: 100%;
+  max-height: calc(100vh - 4rem);
   overflow-y: auto;
   box-shadow: var(--shadow-2xl);
   animation: modalSlideUp var(--transition-base);
+  position: relative;
+  margin: auto;
+}
+
+/* Smooth scrollbar for modal */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: var(--color-gray-100);
+  border-radius: var(--radius-full);
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: var(--color-gray-400);
+  border-radius: var(--radius-full);
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-500);
 }
 
 @keyframes modalFadeIn {
