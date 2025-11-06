@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { getAbout, getStack, getProjects, getExperience, getEducation, getSocialLinks, submitContact } from '../services/api';
+import Navbar from '../components/Navbar';
 import './Home.css';
 
 const Home = () => {
@@ -60,9 +61,11 @@ const Home = () => {
   };
 
   return (
-    <div className="home">
-      {/* Hero Section */}
-      <section className="hero">
+    <>
+      <Navbar />
+      <div className="home">
+        {/* Hero Section */}
+        <section id="home" className="hero">
         <motion.div
           className="hero-content"
           initial={{ opacity: 0, y: 30 }}
@@ -124,7 +127,7 @@ const Home = () => {
 
       {/* About Section */}
       {about && (
-        <section className="about-section">
+        <section id="about" className="about-section">
           <h2>About Me</h2>
           <div className="about-content">
             <div className="about-info">
@@ -151,7 +154,7 @@ const Home = () => {
 
       {/* Stack Section */}
       {stack.length > 0 && (
-        <section className="stack-section">
+        <section id="stack" className="stack-section">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -215,7 +218,7 @@ const Home = () => {
 
       {/* Projects Section */}
       {projects.length > 0 && (
-        <section className="projects-section">
+        <section id="projects" className="projects-section">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -269,7 +272,7 @@ const Home = () => {
 
       {/* Experience Section */}
       {experience.length > 0 && (
-        <section className="experience-section">
+        <section id="experience" className="experience-section">
           <h2>Experience</h2>
           <div className="timeline">
             {experience.map((exp) => (
@@ -290,7 +293,7 @@ const Home = () => {
 
       {/* Education Section */}
       {education.length > 0 && (
-        <section className="education-section">
+        <section id="education" className="education-section">
           <h2>Education</h2>
           <div className="education-grid">
             {education.map((edu) => (
@@ -309,7 +312,7 @@ const Home = () => {
       )}
 
       {/* Contact Section */}
-      <section className="contact-section">
+      <section id="contact" className="contact-section">
         <h2>Get In Touch</h2>
         <form onSubmit={handleContactSubmit} className="contact-form">
           <input
@@ -349,11 +352,12 @@ const Home = () => {
         </form>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
-        <p>&copy; {new Date().getFullYear()} {about?.title || 'Portfolio'}. All rights reserved.</p>
-      </footer>
-    </div>
+        {/* Footer */}
+        <footer className="footer">
+          <p>&copy; {new Date().getFullYear()} {about?.title || 'Portfolio'}. All rights reserved.</p>
+        </footer>
+      </div>
+    </>
   );
 };
 
