@@ -147,22 +147,22 @@ section h2::after {
 .about-section::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: 0;
   border-radius: var(--radius-2xl);
   padding: 3px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-secondary) 90%,
-    var(--color-accent) 95%,
-    transparent 100%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  background:
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) top / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) right / 3px 300%,
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) bottom / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) left / 3px 300%;
+  background-repeat: no-repeat;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  animation: snakeBorderRotate 3s linear infinite;
+  animation: borderSnake 4s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
@@ -171,21 +171,22 @@ section h2::after {
   opacity: 1;
 }
 
-@keyframes snakeBorderRotate {
+@keyframes borderSnake {
   0% {
-    --angle: 0deg;
-    transform: rotate(0deg);
+    background-position: 0% top, right 0%, 100% bottom, left 100%;
+  }
+  25% {
+    background-position: 100% top, right 0%, 100% bottom, left 100%;
+  }
+  50% {
+    background-position: 100% top, right 100%, 100% bottom, left 100%;
+  }
+  75% {
+    background-position: 100% top, right 100%, 0% bottom, left 100%;
   }
   100% {
-    --angle: 360deg;
-    transform: rotate(360deg);
+    background-position: 100% top, right 100%, 0% bottom, left 0%;
   }
-}
-
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
 }
 
 @keyframes borderPulse {
@@ -242,22 +243,20 @@ section h2::after {
 .stack-section::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: 0;
   border-radius: var(--radius-2xl);
   padding: 3px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-secondary) 90%,
-    var(--color-accent) 95%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) top / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) right / 3px 300%,
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) bottom / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) left / 3px 300%;
+  background-repeat: no-repeat;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  animation: snakeBorderRotate 3s linear infinite;
+  animation: borderSnake 4s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
@@ -289,22 +288,20 @@ section h2::after {
 .stack-item::before {
   content: '';
   position: absolute;
-  inset: -2px;
+  inset: 0;
   border-radius: var(--radius-xl);
   padding: 2px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-secondary) 90%,
-    var(--color-accent) 95%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) top / 300% 2px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) right / 2px 300%,
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) bottom / 300% 2px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) left / 2px 300%;
+  background-repeat: no-repeat;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  animation: snakeBorderRotate 2.5s linear infinite;
+  animation: borderSnake 3.5s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
@@ -407,22 +404,20 @@ section h2::after {
 .projects-section::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: 0;
   border-radius: var(--radius-2xl);
   padding: 3px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-secondary) 90%,
-    var(--color-accent) 95%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) top / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) right / 3px 300%,
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) bottom / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) left / 3px 300%;
+  background-repeat: no-repeat;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  animation: snakeBorderRotate 3s linear infinite;
+  animation: borderSnake 4s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
@@ -454,22 +449,20 @@ section h2::after {
 .project-card::before {
   content: '';
   position: absolute;
-  inset: -2px;
+  inset: 0;
   border-radius: var(--radius-xl);
   padding: 2px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-secondary) 90%,
-    var(--color-accent) 95%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) top / 300% 2px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) right / 2px 300%,
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) bottom / 300% 2px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) left / 2px 300%;
+  background-repeat: no-repeat;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  animation: snakeBorderRotate 2.5s linear infinite;
+  animation: borderSnake 3.5s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
@@ -592,22 +585,20 @@ section h2::after {
 .experience-section::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: 0;
   border-radius: var(--radius-2xl);
   padding: 3px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-secondary) 90%,
-    var(--color-accent) 95%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) top / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) right / 3px 300%,
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) bottom / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) left / 3px 300%;
+  background-repeat: no-repeat;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  animation: snakeBorderRotate 3s linear infinite;
+  animation: borderSnake 4s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
@@ -664,22 +655,20 @@ section h2::after {
 .education-section::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: 0;
   border-radius: var(--radius-2xl);
   padding: 3px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-secondary) 90%,
-    var(--color-accent) 95%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) top / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) right / 3px 300%,
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) bottom / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) left / 3px 300%;
+  background-repeat: no-repeat;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  animation: snakeBorderRotate 3s linear infinite;
+  animation: borderSnake 4s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
@@ -710,22 +699,20 @@ section h2::after {
 .education-card::before {
   content: '';
   position: absolute;
-  inset: -2px;
+  inset: 0;
   border-radius: var(--radius-xl);
   padding: 2px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-secondary) 90%,
-    var(--color-accent) 95%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) top / 300% 2px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) right / 2px 300%,
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) bottom / 300% 2px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) left / 2px 300%;
+  background-repeat: no-repeat;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  animation: snakeBorderRotate 2.5s linear infinite;
+  animation: borderSnake 3.5s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
@@ -761,22 +748,20 @@ section h2::after {
 .contact-section::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: 0;
   border-radius: var(--radius-2xl);
   padding: 3px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-secondary) 90%,
-    var(--color-accent) 95%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) top / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) right / 3px 300%,
+    linear-gradient(90deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) bottom / 300% 3px,
+    linear-gradient(0deg, transparent, transparent 40%, var(--color-accent) 50%, var(--color-secondary) 60%, var(--color-accent) 70%, transparent 80%, transparent) left / 3px 300%;
+  background-repeat: no-repeat;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  animation: snakeBorderRotate 3s linear infinite;
+  animation: borderSnake 4s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
