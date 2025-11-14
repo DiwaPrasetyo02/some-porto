@@ -47,7 +47,20 @@ const EducationManager = ({ onUpdate }) => {
               <p>{item.institution}</p>
             </div>
             <div className="item-actions">
-              <button className="btn-secondary" onClick={() => { setEditing(item); setForm(item); setShowModal(true); }}><FaEdit /></button>
+              <button className="btn-secondary" onClick={() => {
+                setEditing(item);
+                setForm({
+                  institution: item.institution || '',
+                  degree: item.degree || '',
+                  field: item.field || '',
+                  description: item.description || '',
+                  start_date: item.start_date || '',
+                  end_date: item.end_date || '',
+                  grade: item.grade || '',
+                  order_index: item.order_index || 0
+                });
+                setShowModal(true);
+              }}><FaEdit /></button>
               <button className="btn-danger" onClick={async () => { if (window.confirm('Delete?')) { await adminDeleteEducation(item.id); load(); if (onUpdate) onUpdate(); } }}><FaTrash /></button>
             </div>
           </div>

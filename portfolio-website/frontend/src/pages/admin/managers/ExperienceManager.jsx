@@ -58,7 +58,20 @@ const ExperienceManager = ({ onUpdate }) => {
               <p>{item.start_date} - {item.is_current ? 'Present' : item.end_date}</p>
             </div>
             <div className="item-actions">
-              <button className="btn-secondary" onClick={() => { setEditingItem(item); setFormData(item); setShowModal(true); }}>
+              <button className="btn-secondary" onClick={() => {
+                setEditingItem(item);
+                setFormData({
+                  company: item.company || '',
+                  position: item.position || '',
+                  description: item.description || '',
+                  start_date: item.start_date || '',
+                  end_date: item.end_date || '',
+                  location: item.location || '',
+                  is_current: item.is_current || false,
+                  order_index: item.order_index || 0
+                });
+                setShowModal(true);
+              }}>
                 <FaEdit />
               </button>
               <button className="btn-danger" onClick={async () => {

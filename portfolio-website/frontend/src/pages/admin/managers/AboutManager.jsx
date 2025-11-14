@@ -24,7 +24,17 @@ const AboutManager = ({ onUpdate }) => {
     try {
       const response = await getAbout();
       setAbout(response.data);
-      setFormData(response.data);
+      // Ensure all fields are strings to prevent controlled/uncontrolled input issues
+      setFormData({
+        title: response.data.title || '',
+        subtitle: response.data.subtitle || '',
+        description: response.data.description || '',
+        profile_image: response.data.profile_image || '',
+        resume_url: response.data.resume_url || '',
+        email: response.data.email || '',
+        phone: response.data.phone || '',
+        location: response.data.location || '',
+      });
     } catch (error) {
       console.log('No about section found');
     }
