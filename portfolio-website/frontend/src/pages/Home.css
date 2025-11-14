@@ -147,15 +147,31 @@ section h2::after {
 .about-section::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -4px;
   border-radius: var(--radius-2xl);
-  padding: 2px;
-  background: var(--color-primary-gradient);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.5;
-  animation: borderPulse 3s ease-in-out infinite;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 10%,
+    var(--color-secondary) 20%,
+    var(--color-accent) 30%,
+    transparent 40%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: snakeRotate 3s linear infinite;
+  z-index: -1;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+
+.about-section:hover::before {
+  opacity: 1;
+}
+
+@keyframes snakeRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @keyframes borderPulse {
@@ -206,6 +222,32 @@ section h2::after {
   border: 2px solid var(--color-secondary);
   margin-bottom: 80px;
   position: relative;
+  overflow: hidden;
+}
+
+.stack-section::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-2xl);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 10%,
+    var(--color-secondary) 20%,
+    var(--color-accent) 30%,
+    transparent 40%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: snakeRotate 3s linear infinite;
+  z-index: -1;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+
+.stack-section:hover::before {
+  opacity: 1;
 }
 
 .stack-grid {
@@ -223,25 +265,34 @@ section h2::after {
   text-align: center;
   transition: all var(--transition-base);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   border: 2px solid var(--color-border);
+  z-index: 1;
 }
 
 .stack-item::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--color-primary-gradient);
-  transform: scaleX(0);
-  transition: transform var(--transition-base);
-  box-shadow: var(--glow-cyan);
+  inset: -3px;
+  border-radius: var(--radius-xl);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 15%,
+    var(--color-secondary) 25%,
+    var(--color-accent) 35%,
+    transparent 45%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: snakeRotate 2.5s linear infinite;
+  z-index: -1;
+  filter: blur(6px);
+  transition: opacity 0.3s ease;
 }
 
 .stack-item:hover::before {
-  transform: scaleX(1);
+  opacity: 1;
 }
 
 .stack-item:hover {
@@ -332,6 +383,32 @@ section h2::after {
   border: 2px solid var(--color-accent);
   margin-bottom: 80px;
   position: relative;
+  overflow: hidden;
+}
+
+.projects-section::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-2xl);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 10%,
+    var(--color-secondary) 20%,
+    var(--color-accent) 30%,
+    transparent 40%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: snakeRotate 3s linear infinite;
+  z-index: -1;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+
+.projects-section:hover::before {
+  opacity: 1;
 }
 
 .projects-grid {
@@ -344,13 +421,39 @@ section h2::after {
 .project-card {
   background: rgba(13, 17, 23, 0.95);
   border-radius: var(--radius-xl);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: var(--shadow-lg);
   transition: all var(--transition-base);
   position: relative;
   border: 2px solid var(--color-border);
   display: flex;
   flex-direction: column;
+  z-index: 1;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--radius-xl);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 15%,
+    var(--color-secondary) 25%,
+    var(--color-accent) 35%,
+    transparent 45%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: snakeRotate 2.5s linear infinite;
+  z-index: -1;
+  filter: blur(6px);
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover::before {
+  opacity: 1;
 }
 
 .project-card::after {
@@ -365,6 +468,7 @@ section h2::after {
   transition: opacity var(--transition-base);
   pointer-events: none;
   z-index: 0;
+  border-radius: var(--radius-xl);
 }
 
 .project-card:hover::after {
@@ -384,6 +488,12 @@ section h2::after {
   transition: transform var(--transition-slow);
   position: relative;
   z-index: 1;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.project-card > :first-child {
+  overflow: hidden;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .project-card:hover img {
@@ -454,6 +564,32 @@ section h2::after {
   border: 2px solid var(--color-primary);
   margin-bottom: 80px;
   position: relative;
+  overflow: hidden;
+}
+
+.experience-section::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-2xl);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 10%,
+    var(--color-secondary) 20%,
+    var(--color-accent) 30%,
+    transparent 40%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: snakeRotate 3s linear infinite;
+  z-index: -1;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+
+.experience-section:hover::before {
+  opacity: 1;
 }
 
 .timeline {
@@ -498,6 +634,32 @@ section h2::after {
   border: 2px solid var(--color-secondary);
   margin-bottom: 80px;
   position: relative;
+  overflow: hidden;
+}
+
+.education-section::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-2xl);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 10%,
+    var(--color-secondary) 20%,
+    var(--color-accent) 30%,
+    transparent 40%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: snakeRotate 3s linear infinite;
+  z-index: -1;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+
+.education-section:hover::before {
+  opacity: 1;
 }
 
 .education-grid {
@@ -515,24 +677,33 @@ section h2::after {
   transition: all var(--transition-base);
   border: 2px solid var(--color-border);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  z-index: 1;
 }
 
 .education-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--color-primary-gradient);
-  transform: scaleX(0);
-  transition: transform var(--transition-base);
-  box-shadow: var(--glow-cyan);
+  inset: -3px;
+  border-radius: var(--radius-xl);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 15%,
+    var(--color-secondary) 25%,
+    var(--color-accent) 35%,
+    transparent 45%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: snakeRotate 2.5s linear infinite;
+  z-index: -1;
+  filter: blur(6px);
+  transition: opacity 0.3s ease;
 }
 
 .education-card:hover::before {
-  transform: scaleX(1);
+  opacity: 1;
 }
 
 .education-card:hover {
@@ -556,6 +727,32 @@ section h2::after {
   border: 2px solid var(--color-accent);
   margin-bottom: 80px;
   position: relative;
+  overflow: hidden;
+}
+
+.contact-section::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-2xl);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-accent) 10%,
+    var(--color-secondary) 20%,
+    var(--color-accent) 30%,
+    transparent 40%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: snakeRotate 3s linear infinite;
+  z-index: -1;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+
+.contact-section:hover::before {
+  opacity: 1;
 }
 
 .contact-form {
