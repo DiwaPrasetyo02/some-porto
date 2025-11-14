@@ -67,7 +67,18 @@ const ProjectManager = ({ onUpdate }) => {
 
   const handleEdit = (item) => {
     setEditingItem(item);
-    setFormData(item);
+    // Ensure all fields have proper values to prevent controlled/uncontrolled input issues
+    setFormData({
+      title: item.title || '',
+      description: item.description || '',
+      short_description: item.short_description || '',
+      image: item.image || '',
+      technologies: item.technologies || '',
+      github_url: item.github_url || '',
+      live_url: item.live_url || '',
+      featured: item.featured || false,
+      order_index: item.order_index || 0,
+    });
     setShowModal(true);
   };
 

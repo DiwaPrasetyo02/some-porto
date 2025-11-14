@@ -64,7 +64,15 @@ const StackManager = ({ onUpdate }) => {
 
   const handleEdit = (item) => {
     setEditingItem(item);
-    setFormData(item);
+    // Ensure all fields have proper values to prevent controlled/uncontrolled input issues
+    setFormData({
+      name: item.name || '',
+      category: item.category || '',
+      icon: item.icon || '',
+      proficiency: item.proficiency || 0,
+      description: item.description || '',
+      order_index: item.order_index || 0,
+    });
     setShowModal(true);
   };
 
