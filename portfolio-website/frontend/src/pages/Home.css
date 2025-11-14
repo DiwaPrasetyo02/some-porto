@@ -147,31 +147,45 @@ section h2::after {
 .about-section::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 10%,
-    var(--color-secondary) 20%,
-    var(--color-accent) 30%,
-    transparent 40%,
+    from var(--angle),
+    transparent 70%,
+    var(--color-accent) 80%,
+    var(--color-secondary) 90%,
+    var(--color-accent) 95%,
     transparent 100%
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  animation: snakeRotate 3s linear infinite;
-  z-index: -1;
-  filter: blur(8px);
+  animation: snakeBorderRotate 3s linear infinite;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .about-section:hover::before {
   opacity: 1;
 }
 
-@keyframes snakeRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes snakeBorderRotate {
+  0% {
+    --angle: 0deg;
+    transform: rotate(0deg);
+  }
+  100% {
+    --angle: 360deg;
+    transform: rotate(360deg);
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
 
 @keyframes borderPulse {
@@ -228,22 +242,24 @@ section h2::after {
 .stack-section::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 10%,
-    var(--color-secondary) 20%,
-    var(--color-accent) 30%,
-    transparent 40%,
+    from var(--angle),
+    transparent 70%,
+    var(--color-accent) 80%,
+    var(--color-secondary) 90%,
+    var(--color-accent) 95%,
     transparent 100%
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  animation: snakeRotate 3s linear infinite;
-  z-index: -1;
-  filter: blur(8px);
+  animation: snakeBorderRotate 3s linear infinite;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .stack-section:hover::before {
@@ -273,22 +289,24 @@ section h2::after {
 .stack-item::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: -2px;
   border-radius: var(--radius-xl);
+  padding: 2px;
   background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 15%,
-    var(--color-secondary) 25%,
-    var(--color-accent) 35%,
-    transparent 45%,
+    from var(--angle),
+    transparent 70%,
+    var(--color-accent) 80%,
+    var(--color-secondary) 90%,
+    var(--color-accent) 95%,
     transparent 100%
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  animation: snakeRotate 2.5s linear infinite;
-  z-index: -1;
-  filter: blur(6px);
+  animation: snakeBorderRotate 2.5s linear infinite;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .stack-item:hover::before {
@@ -389,22 +407,24 @@ section h2::after {
 .projects-section::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 10%,
-    var(--color-secondary) 20%,
-    var(--color-accent) 30%,
-    transparent 40%,
+    from var(--angle),
+    transparent 70%,
+    var(--color-accent) 80%,
+    var(--color-secondary) 90%,
+    var(--color-accent) 95%,
     transparent 100%
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  animation: snakeRotate 3s linear infinite;
-  z-index: -1;
-  filter: blur(8px);
+  animation: snakeBorderRotate 3s linear infinite;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .projects-section:hover::before {
@@ -434,22 +454,24 @@ section h2::after {
 .project-card::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: -2px;
   border-radius: var(--radius-xl);
+  padding: 2px;
   background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 15%,
-    var(--color-secondary) 25%,
-    var(--color-accent) 35%,
-    transparent 45%,
+    from var(--angle),
+    transparent 70%,
+    var(--color-accent) 80%,
+    var(--color-secondary) 90%,
+    var(--color-accent) 95%,
     transparent 100%
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  animation: snakeRotate 2.5s linear infinite;
-  z-index: -1;
-  filter: blur(6px);
+  animation: snakeBorderRotate 2.5s linear infinite;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .project-card:hover::before {
@@ -570,22 +592,24 @@ section h2::after {
 .experience-section::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 10%,
-    var(--color-secondary) 20%,
-    var(--color-accent) 30%,
-    transparent 40%,
+    from var(--angle),
+    transparent 70%,
+    var(--color-accent) 80%,
+    var(--color-secondary) 90%,
+    var(--color-accent) 95%,
     transparent 100%
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  animation: snakeRotate 3s linear infinite;
-  z-index: -1;
-  filter: blur(8px);
+  animation: snakeBorderRotate 3s linear infinite;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .experience-section:hover::before {
@@ -640,22 +664,24 @@ section h2::after {
 .education-section::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 10%,
-    var(--color-secondary) 20%,
-    var(--color-accent) 30%,
-    transparent 40%,
+    from var(--angle),
+    transparent 70%,
+    var(--color-accent) 80%,
+    var(--color-secondary) 90%,
+    var(--color-accent) 95%,
     transparent 100%
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  animation: snakeRotate 3s linear infinite;
-  z-index: -1;
-  filter: blur(8px);
+  animation: snakeBorderRotate 3s linear infinite;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .education-section:hover::before {
@@ -684,22 +710,24 @@ section h2::after {
 .education-card::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: -2px;
   border-radius: var(--radius-xl);
+  padding: 2px;
   background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 15%,
-    var(--color-secondary) 25%,
-    var(--color-accent) 35%,
-    transparent 45%,
+    from var(--angle),
+    transparent 70%,
+    var(--color-accent) 80%,
+    var(--color-secondary) 90%,
+    var(--color-accent) 95%,
     transparent 100%
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  animation: snakeRotate 2.5s linear infinite;
-  z-index: -1;
-  filter: blur(6px);
+  animation: snakeBorderRotate 2.5s linear infinite;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .education-card:hover::before {
@@ -733,22 +761,24 @@ section h2::after {
 .contact-section::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    var(--color-accent) 10%,
-    var(--color-secondary) 20%,
-    var(--color-accent) 30%,
-    transparent 40%,
+    from var(--angle),
+    transparent 70%,
+    var(--color-accent) 80%,
+    var(--color-secondary) 90%,
+    var(--color-accent) 95%,
     transparent 100%
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  animation: snakeRotate 3s linear infinite;
-  z-index: -1;
-  filter: blur(8px);
+  animation: snakeBorderRotate 3s linear infinite;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .contact-section:hover::before {
