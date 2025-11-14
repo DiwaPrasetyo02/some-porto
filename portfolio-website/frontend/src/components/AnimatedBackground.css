@@ -6,7 +6,7 @@
   height: 100%;
   overflow: hidden;
   z-index: -1;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 30%, #0d1117 60%, #0a0e27 100%);
 }
 
 /* Animated gradient layers */
@@ -19,18 +19,21 @@
 }
 
 .gradient-layer-1 {
-  background: radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.4) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 50%, rgba(0, 240, 255, 0.4) 0%, transparent 50%);
   animation: float1 20s ease-in-out infinite;
+  filter: blur(40px);
 }
 
 .gradient-layer-2 {
-  background: radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.4) 0%, transparent 50%);
+  background: radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.4) 0%, transparent 50%);
   animation: float2 25s ease-in-out infinite;
+  filter: blur(40px);
 }
 
 .gradient-layer-3 {
-  background: radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.3) 0%, transparent 50%);
+  background: radial-gradient(circle at 50% 20%, rgba(182, 0, 255, 0.3) 0%, transparent 50%);
   animation: float3 30s ease-in-out infinite;
+  filter: blur(40px);
 }
 
 /* Particles */
@@ -44,25 +47,26 @@
 .particle {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.9), rgba(182, 0, 255, 0.3), rgba(255, 0, 110, 0));
   pointer-events: none;
-  filter: blur(2px);
+  filter: blur(3px);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
 }
 
-/* Mesh gradient overlay for modern look */
+/* Cyberpunk Mesh gradient overlay */
 .mesh-overlay {
   position: absolute;
   width: 100%;
   height: 100%;
   background-image:
-    radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 0.3) 0px, transparent 50%),
-    radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 0.2) 0px, transparent 50%),
-    radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 0.3) 0px, transparent 50%),
-    radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 0.3) 0px, transparent 50%),
-    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 0.2) 0px, transparent 50%),
-    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 0.3) 0px, transparent 50%),
-    radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 0.3) 0px, transparent 50%);
-  opacity: 0.7;
+    radial-gradient(at 27% 37%, rgba(0, 240, 255, 0.25) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, rgba(182, 0, 255, 0.2) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, rgba(255, 0, 110, 0.25) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, rgba(0, 240, 255, 0.2) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, rgba(255, 184, 0, 0.15) 0px, transparent 50%),
+    radial-gradient(at 33% 50%, rgba(182, 0, 255, 0.25) 0px, transparent 50%),
+    radial-gradient(at 79% 53%, rgba(255, 0, 110, 0.2) 0px, transparent 50%);
+  opacity: 0.8;
   animation: meshFloat 40s ease-in-out infinite;
 }
 
