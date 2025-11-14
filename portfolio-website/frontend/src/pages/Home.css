@@ -26,6 +26,9 @@ section h2 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   position: relative;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.5));
 }
 
 section h2::after {
@@ -38,6 +41,7 @@ section h2::after {
   height: 4px;
   background: var(--color-primary-gradient);
   border-radius: var(--radius-full);
+  box-shadow: var(--glow-cyan);
 }
 
 /* Hero Section */
@@ -60,7 +64,7 @@ section h2::after {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(91, 33, 182, 0.1);
+  background: rgba(10, 14, 39, 0.3);
   backdrop-filter: blur(80px);
   z-index: 0;
 }
@@ -70,8 +74,8 @@ section h2::after {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.15), transparent 50%),
-    radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.1), transparent 50%);
+    radial-gradient(ellipse at 30% 20%, rgba(0, 240, 255, 0.15), transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(182, 0, 255, 0.15), transparent 50%);
   animation: heroGlow 8s ease-in-out infinite alternate;
   z-index: 0;
 }
@@ -84,12 +88,19 @@ section h2::after {
 .hero-content h1 {
   font-size: 4rem;
   margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 30px rgba(0, 240, 255, 0.8), 0 0 60px rgba(182, 0, 255, 0.6);
 }
 
 .hero-content h2 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  opacity: 0.9;
+  opacity: 0.95;
+  background: var(--color-primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-content p {
@@ -107,25 +118,49 @@ section h2::after {
 }
 
 .social-links a {
-  color: white;
-  transition: transform 0.3s, opacity 0.2s;
-  opacity: 0.9;
+  color: var(--color-primary);
+  transition: all 0.3s;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.6));
 }
 
 .social-links a:hover {
   transform: translateY(-3px) scale(1.1);
   opacity: 1;
+  color: var(--color-primary-light);
+  filter: drop-shadow(0 0 20px rgba(0, 240, 255, 1));
 }
 
-/* About Section */
+/* About Section - Cyberpunk Card */
 .about-section {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(26, 31, 58, 0.8);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-xl);
   border-radius: var(--radius-2xl);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid var(--color-primary);
   margin-top: 40px;
   margin-bottom: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-2xl);
+  padding: 2px;
+  background: var(--color-primary-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  animation: borderPulse 3s ease-in-out infinite;
+}
+
+@keyframes borderPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 .about-content {
@@ -147,27 +182,30 @@ section h2::after {
   gap: var(--spacing-sm);
   margin: var(--spacing-sm) var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-lg);
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(182, 0, 255, 0.1));
   border-radius: var(--radius-full);
   font-weight: 500;
-  color: var(--color-primary-dark);
+  color: var(--color-primary);
   transition: all var(--transition-base);
+  border: 1px solid rgba(0, 240, 255, 0.3);
 }
 
 .contact-info:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+  box-shadow: var(--glow-cyan);
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(182, 0, 255, 0.2));
+  border-color: var(--color-primary);
 }
 
-/* Stack Section */
+/* Stack Section - Cyberpunk Card */
 .stack-section {
-  background: rgba(249, 250, 251, 0.8);
+  background: rgba(26, 31, 58, 0.7);
   backdrop-filter: blur(10px);
   border-radius: var(--radius-2xl);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--color-secondary);
   margin-bottom: 80px;
+  position: relative;
 }
 
 .stack-grid {
@@ -178,7 +216,7 @@ section h2::after {
 }
 
 .stack-item {
-  background: white;
+  background: rgba(13, 17, 23, 0.9);
   padding: var(--spacing-xl);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
@@ -186,7 +224,7 @@ section h2::after {
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--color-border-light);
+  border: 2px solid var(--color-border);
 }
 
 .stack-item::before {
@@ -199,6 +237,7 @@ section h2::after {
   background: var(--color-primary-gradient);
   transform: scaleX(0);
   transition: transform var(--transition-base);
+  box-shadow: var(--glow-cyan);
 }
 
 .stack-item:hover::before {
@@ -207,8 +246,9 @@ section h2::after {
 
 .stack-item:hover {
   transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--color-primary-light);
+  box-shadow: var(--shadow-2xl);
+  border-color: var(--color-primary);
+  background: rgba(13, 17, 23, 1);
 }
 
 .stack-item img {
@@ -274,7 +314,7 @@ section h2::after {
   background: var(--color-primary-gradient);
   border-radius: var(--radius-full);
   position: relative;
-  box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+  box-shadow: var(--glow-cyan);
   transition: width var(--transition-slow);
 }
 
@@ -283,14 +323,15 @@ section h2::after {
   100% { transform: translateX(100%); }
 }
 
-/* Projects Section */
+/* Projects Section - Cyberpunk Card */
 .projects-section {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(26, 31, 58, 0.75);
   backdrop-filter: blur(10px);
   border-radius: var(--radius-2xl);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--color-accent);
   margin-bottom: 80px;
+  position: relative;
 }
 
 .projects-grid {
@@ -301,13 +342,13 @@ section h2::after {
 }
 
 .project-card {
-  background: white;
+  background: rgba(13, 17, 23, 0.95);
   border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   transition: all var(--transition-base);
   position: relative;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   display: flex;
   flex-direction: column;
 }
@@ -327,13 +368,13 @@ section h2::after {
 }
 
 .project-card:hover::after {
-  opacity: 0.03;
+  opacity: 0.1;
 }
 
 .project-card:hover {
   transform: translateY(-12px);
   box-shadow: var(--shadow-2xl);
-  border-color: var(--color-primary-light);
+  border-color: var(--color-accent);
 }
 
 .project-card img {
@@ -386,28 +427,33 @@ section h2::after {
   gap: var(--spacing-xs);
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-primary-gradient);
-  color: white;
+  color: var(--color-text-primary);
   text-decoration: none;
   border-radius: var(--radius-md);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.9rem;
   transition: all var(--transition-base);
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: var(--glow-cyan);
+  border: 1px solid var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .project-links a:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary-light);
 }
 
-/* Experience Section */
+/* Experience Section - Cyberpunk Card */
 .experience-section {
-  background: rgba(248, 249, 250, 0.85);
+  background: rgba(26, 31, 58, 0.7);
   backdrop-filter: blur(10px);
   border-radius: var(--radius-2xl);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--color-primary);
   margin-bottom: 80px;
+  position: relative;
 }
 
 .timeline {
@@ -428,27 +474,30 @@ section h2::after {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #667eea;
+  background: var(--color-primary);
+  box-shadow: var(--glow-cyan);
 }
 
 .timeline-content h3 {
   margin-bottom: 5px;
+  color: var(--color-primary);
 }
 
 .timeline-date {
-  color: #666;
+  color: var(--color-text-secondary);
   font-style: italic;
   margin: 10px 0;
 }
 
-/* Education Section */
+/* Education Section - Cyberpunk Card */
 .education-section {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(26, 31, 58, 0.75);
   backdrop-filter: blur(10px);
   border-radius: var(--radius-2xl);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--color-secondary);
   margin-bottom: 80px;
+  position: relative;
 }
 
 .education-grid {
@@ -459,12 +508,12 @@ section h2::after {
 }
 
 .education-card {
-  background: white;
+  background: rgba(13, 17, 23, 0.9);
   padding: var(--spacing-xl);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   transition: all var(--transition-base);
-  border: 1px solid var(--color-border-light);
+  border: 2px solid var(--color-border);
   position: relative;
   overflow: hidden;
 }
@@ -479,6 +528,7 @@ section h2::after {
   background: var(--color-primary-gradient);
   transform: scaleX(0);
   transition: transform var(--transition-base);
+  box-shadow: var(--glow-cyan);
 }
 
 .education-card:hover::before {
@@ -486,24 +536,26 @@ section h2::after {
 }
 
 .education-card:hover {
-  box-shadow: var(--shadow-xl);
-  border-color: var(--color-primary-light);
+  box-shadow: var(--shadow-2xl);
+  border-color: var(--color-secondary);
+  background: rgba(13, 17, 23, 1);
 }
 
 .education-date {
-  color: #666;
+  color: var(--color-text-secondary);
   font-style: italic;
   margin: 10px 0;
 }
 
-/* Contact Section */
+/* Contact Section - Cyberpunk Card */
 .contact-section {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(26, 31, 58, 0.8);
   backdrop-filter: blur(10px);
   border-radius: var(--radius-2xl);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--color-accent);
   margin-bottom: 80px;
+  position: relative;
 }
 
 .contact-form {
@@ -513,10 +565,10 @@ section h2::after {
   flex-direction: column;
   gap: var(--spacing-lg);
   padding: var(--spacing-2xl);
-  background: white;
+  background: rgba(13, 17, 23, 0.9);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-xl);
-  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-2xl);
+  border: 2px solid var(--color-border);
 }
 
 .contact-form input,
@@ -528,64 +580,77 @@ section h2::after {
   font-family: inherit;
   transition: all var(--transition-base);
   background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(91, 33, 182, 0.1);
-  background: white;
+  box-shadow: var(--glow-cyan);
+  background: var(--color-bg-tertiary);
 }
 
 .contact-form button {
   padding: var(--spacing-lg);
   background: var(--color-primary-gradient-bold);
-  color: white;
-  border: none;
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-primary);
   border-radius: var(--radius-lg);
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-base);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
   box-shadow: 0 4px 20px rgba(91, 33, 182, 0.3);
 }
 
 .contact-form button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(91, 33, 182, 0.4);
+  box-shadow: var(--shadow-2xl);
+  border-color: var(--color-primary-light);
 }
 
 .success-message {
-  color: green;
+  color: var(--color-success);
   text-align: center;
+  padding: var(--spacing-md);
+  background: var(--color-success-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-success);
+  text-shadow: var(--glow-cyan);
 }
 
 .error-message {
-  color: red;
+  color: var(--color-error);
   text-align: center;
+  padding: var(--spacing-md);
+  background: var(--color-error-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-error);
 }
 
-/* Footer */
+/* Footer - Cyberpunk Style */
 .footer {
-  background: linear-gradient(135deg, var(--color-gray-900) 0%, var(--color-gray-800) 100%);
-  color: rgba(255, 255, 255, 0.8);
+  background: rgba(10, 14, 39, 0.95);
+  color: var(--color-text-secondary);
   text-align: center;
   padding: var(--spacing-3xl);
-  border-top: 3px solid transparent;
-  border-image: var(--color-primary-gradient-bold);
-  border-image-slice: 1;
+  border-top: 2px solid var(--color-primary);
   position: relative;
 }
 
 .footer::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -2px;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 2px;
   background: var(--color-primary-gradient-bold);
+  box-shadow: var(--glow-cyan);
+  animation: borderPulse 3s ease-in-out infinite;
 }
 
 .footer p {
