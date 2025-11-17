@@ -1,8 +1,28 @@
 .home {
   margin-top: 70px;
   min-height: 100vh;
-  background: transparent;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 30%, #0d1117 60%, #0a0e27 100%);
   position: relative;
+}
+
+.home::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(182, 0, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(255, 0, 110, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home > * {
+  position: relative;
+  z-index: 1;
 }
 
 section {

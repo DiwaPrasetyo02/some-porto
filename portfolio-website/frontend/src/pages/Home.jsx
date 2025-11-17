@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { getAbout, getStack, getProjects, getExperience, getEducation, getSocialLinks, submitContact } from '../services/api';
 import Navbar from '../components/Navbar';
-import AnimatedBackground from '../components/AnimatedBackground';
 import ProjectCarousel from '../components/ProjectCarousel';
 import ExperienceTimeline from '../components/ExperienceTimeline';
 import { useTypingEffect } from '../hooks/useTypingEffect';
@@ -74,7 +73,6 @@ const Home = () => {
 
   return (
     <>
-      <AnimatedBackground />
       <Navbar />
       <div className="home">
         {/* Hero Section */}
