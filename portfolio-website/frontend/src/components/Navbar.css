@@ -124,7 +124,6 @@
 
 .navbar-item:hover {
   color: var(--color-primary-light);
-  transform: translateY(-2px);
   text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
 }
 
@@ -236,9 +235,5 @@
     text-align: left;
     padding: var(--spacing-md) var(--spacing-lg);
     border-radius: var(--radius-lg);
-  }
-
-  .navbar-item:hover {
-    transform: translateX(4px);
   }
 }
