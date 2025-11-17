@@ -186,6 +186,7 @@ section h2::after {
   position: absolute;
   inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
     from 0deg,
     #ff0000,
@@ -197,12 +198,14 @@ section h2::after {
     #ff00ff,
     #ff0000
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
   animation: rgbRotate 3s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
-  z-index: -1;
-  filter: blur(4px);
+  z-index: 1;
 }
 
 .about-section:hover::before {
@@ -283,6 +286,7 @@ section h2::after {
   position: absolute;
   inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
     from 0deg,
     #ff0000,
@@ -294,12 +298,14 @@ section h2::after {
     #ff00ff,
     #ff0000
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
   animation: rgbRotate 3s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
-  z-index: -1;
-  filter: blur(4px);
+  z-index: 1;
 }
 
 .stack-section:hover::before {
@@ -453,6 +459,7 @@ section h2::after {
   position: absolute;
   inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
     from 0deg,
     #ff0000,
@@ -464,12 +471,14 @@ section h2::after {
     #ff00ff,
     #ff0000
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
   animation: rgbRotate 3s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
-  z-index: -1;
-  filter: blur(4px);
+  z-index: 1;
 }
 
 .projects-section:hover::before {
@@ -637,6 +646,7 @@ section h2::after {
   position: absolute;
   inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
     from 0deg,
     #ff0000,
@@ -648,12 +658,14 @@ section h2::after {
     #ff00ff,
     #ff0000
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
   animation: rgbRotate 3s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
-  z-index: -1;
-  filter: blur(4px);
+  z-index: 1;
 }
 
 .experience-section:hover::before {
@@ -710,6 +722,7 @@ section h2::after {
   position: absolute;
   inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
     from 0deg,
     #ff0000,
@@ -721,12 +734,14 @@ section h2::after {
     #ff00ff,
     #ff0000
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
   animation: rgbRotate 3s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
-  z-index: -1;
-  filter: blur(4px);
+  z-index: 1;
 }
 
 .education-section:hover::before {
@@ -806,6 +821,7 @@ section h2::after {
   position: absolute;
   inset: -3px;
   border-radius: var(--radius-2xl);
+  padding: 3px;
   background: conic-gradient(
     from 0deg,
     #ff0000,
@@ -817,12 +833,14 @@ section h2::after {
     #ff00ff,
     #ff0000
   );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
   animation: rgbRotate 3s linear infinite;
   transition: opacity 0.3s ease;
   pointer-events: none;
-  z-index: -1;
-  filter: blur(4px);
+  z-index: 1;
 }
 
 .contact-section:hover::before {
@@ -980,9 +998,9 @@ section h2::after {
 
 @keyframes rgbRotate {
   0% {
-    filter: blur(4px) hue-rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    filter: blur(4px) hue-rotate(360deg);
+    transform: rotate(360deg);
   }
 }
