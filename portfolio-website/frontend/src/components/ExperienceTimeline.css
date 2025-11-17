@@ -34,7 +34,7 @@
 .timeline-content.left {
   margin-right: auto;
   padding-right: 40px;
-  text-align: right;
+  text-align: left;
 }
 
 .timeline-content.right {
@@ -89,8 +89,7 @@
 }
 
 .timeline-card-meta {
-  display: flex;
-  flex-direction: column;
+
   gap: var(--spacing-xs);
   margin-top: var(--spacing-md);
   font-size: 0.9rem;
@@ -100,7 +99,7 @@
 .timeline-card-meta .date,
 .timeline-card-meta .location {
   display: flex;
-  align-items: center;
+  align-items: left;
   gap: var(--spacing-xs);
 }
 
@@ -135,7 +134,7 @@
 
 .timeline-dot {
   position: absolute;
-  left: 50%;
+  left: 49.15%;
   transform: translateX(-50%);
   width: 20px;
   height: 20px;

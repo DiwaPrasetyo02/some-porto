@@ -51,18 +51,6 @@ section h2 {
   filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.5));
 }
 
-section h2::after {
-  content: '';
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: var(--color-primary-gradient);
-  border-radius: var(--radius-full);
-  box-shadow: var(--glow-cyan);
-}
 
 /* Hero Section */
 .hero {
