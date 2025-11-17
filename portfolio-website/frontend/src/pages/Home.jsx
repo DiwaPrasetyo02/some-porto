@@ -4,6 +4,7 @@ import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt } 
 import { getAbout, getStack, getProjects, getExperience, getEducation, getSocialLinks, submitContact } from '../services/api';
 import Navbar from '../components/Navbar';
 import AnimatedBackground from '../components/AnimatedBackground';
+import { useTypingEffect } from '../hooks/useTypingEffect';
 import './Home.css';
 
 const Home = () => {
@@ -15,6 +16,14 @@ const Home = () => {
   const [socialLinks, setSocialLinks] = useState([]);
   const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitStatus, setSubmitStatus] = useState(null);
+
+  // Typing effect texts
+  const typingTexts = [
+    'A passionate tech person with a deep mind about AI and machine learning',
+    'Building innovative solutions with cutting-edge technologies',
+    'Transforming ideas into powerful digital experiences'
+  ];
+  const typedText = useTypingEffect(typingTexts, 80, 2500);
 
   useEffect(() => {
     loadData();
@@ -91,11 +100,12 @@ const Home = () => {
                 {about.subtitle}
               </motion.h2>
               <motion.p
+                className="typing-text"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
-                {about.description}
+                {typedText}<span className="typing-cursor">|</span>
               </motion.p>
               <motion.div
                 className="social-links"
