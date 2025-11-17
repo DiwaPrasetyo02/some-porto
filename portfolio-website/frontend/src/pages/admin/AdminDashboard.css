@@ -287,8 +287,8 @@
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  color: #555;
-  font-weight: 500;
+  color: #2c3e50;
+  font-weight: 600;
 }
 
 .form-group input,
@@ -302,6 +302,7 @@
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   font-family: inherit;
   background: white;
+  color: #2c3e50;
 }
 
 .form-group input:hover,
