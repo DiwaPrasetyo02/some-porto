@@ -142,93 +142,51 @@ const Home = () => {
         <motion.section
           id="about"
           className="about-section"
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            About Me
-          </motion.h2>
+          <h2>About Me</h2>
           <div className="about-content">
-            <motion.div
-              className="about-info"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
+            <div className="about-info">
               <p>{about.description}</p>
               {about.email && (
-                <motion.div
-                  className="contact-info"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.4 }}
-                  whileHover={{ scale: 1.05, x: 5 }}
-                >
+                <div className="contact-info">
                   <FaEnvelope /> {about.email}
-                </motion.div>
+                </div>
               )}
               {about.phone && (
-                <motion.div
-                  className="contact-info"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.5 }}
-                  whileHover={{ scale: 1.05, x: 5 }}
-                >
+                <div className="contact-info">
                   <FaPhone /> {about.phone}
-                </motion.div>
+                </div>
               )}
               {about.location && (
-                <motion.div
-                  className="contact-info"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.6 }}
-                  whileHover={{ scale: 1.05, x: 5 }}
-                >
+                <div className="contact-info">
                   <FaMapMarkerAlt /> {about.location}
-                </motion.div>
+                </div>
               )}
-            </motion.div>
+            </div>
           </div>
         </motion.section>
       )}
 
       {/* Stack Section */}
       {stack.length > 0 && (
-        <section id="stack" className="stack-section">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Tech Stack
-          </motion.h2>
+        <motion.section
+          id="stack"
+          className="stack-section"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          <h2>Tech Stack</h2>
           <div className="stack-grid">
-            {stack.map((item, index) => (
-              <motion.div
+            {stack.map((item) => (
+              <div
                 key={item.id}
                 className="stack-item"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  ease: [0.25, 0.4, 0.25, 1]
-                }}
               >
                 {item.icon && (
                   <img
@@ -244,59 +202,50 @@ const Home = () => {
                 )}
                 {item.description && <p>{item.description}</p>}
                 <div className="proficiency-bar">
-                  <motion.div
+                  <div
                     className="proficiency-fill"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${item.proficiency || 80}%` }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                    style={{ width: `${item.proficiency || 80}%` }}
                   />
                 </div>
                 {item.proficiency != null && (
-                  <motion.div
-                    style={{ marginTop: 8, fontSize: 13, color: 'var(--color-text-secondary)', fontWeight: 600 }}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                  >
+                  <div style={{ marginTop: 8, fontSize: 13, color: 'var(--color-text-secondary)', fontWeight: 600 }}>
                     {item.proficiency}%
-                  </motion.div>
+                  </div>
                 )}
-              </motion.div>
+              </div>
             ))}
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Projects Section */}
       {projects.length > 0 && (
-        <section id="projects" className="projects-section">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Projects
-          </motion.h2>
+        <motion.section
+          id="projects"
+          className="projects-section"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          <h2>Projects</h2>
           <ProjectCarousel projects={projects} />
-        </section>
+        </motion.section>
       )}
 
       {/* Experience Section */}
       {experience.length > 0 && (
-        <section id="experience" className="experience-section">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Experience
-          </motion.h2>
+        <motion.section
+          id="experience"
+          className="experience-section"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          <h2>Experience</h2>
           <ExperienceTimeline experiences={experience} />
-        </section>
+        </motion.section>
       )}
 
       {/* Education Section */}
@@ -304,29 +253,17 @@ const Home = () => {
         <motion.section
           id="education"
           className="education-section"
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Education
-          </motion.h2>
+          <h2>Education</h2>
           <div className="education-grid">
-            {education.map((edu, index) => (
-              <motion.div
+            {education.map((edu) => (
+              <div
                 key={edu.id}
                 className="education-card"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
               >
                 <h3>{edu.degree}</h3>
                 <h4>{edu.institution}</h4>
@@ -335,7 +272,7 @@ const Home = () => {
                   {edu.start_date} - {edu.end_date}
                 </p>
                 {edu.grade && <p>Grade: {edu.grade}</p>}
-              </motion.div>
+              </div>
             ))}
           </div>
         </motion.section>
@@ -345,90 +282,57 @@ const Home = () => {
       <motion.section
         id="contact"
         className="contact-section"
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       >
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          Get In Touch
-        </motion.h2>
-        <motion.form
+        <h2>Get In Touch</h2>
+        <form
           onSubmit={handleContactSubmit}
           className="contact-form"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <motion.input
+          <input
             type="text"
             placeholder="Your Name"
             value={contactForm.name}
             onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
             required
-            whileFocus={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
           />
-          <motion.input
+          <input
             type="email"
             placeholder="Your Email"
             value={contactForm.email}
             onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
             required
-            whileFocus={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
           />
-          <motion.input
+          <input
             type="text"
             placeholder="Subject"
             value={contactForm.subject}
             onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
-            whileFocus={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
           />
-          <motion.textarea
+          <textarea
             placeholder="Your Message"
             value={contactForm.message}
             onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
             required
             rows="5"
-            whileFocus={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
           />
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <button type="submit">
             Send Message
-          </motion.button>
+          </button>
           {submitStatus === 'success' && (
-            <motion.p
-              className="success-message"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-            >
+            <p className="success-message">
               Message sent successfully!
-            </motion.p>
+            </p>
           )}
           {submitStatus === 'error' && (
-            <motion.p
-              className="error-message"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-            >
+            <p className="error-message">
               Failed to send message. Please try again.
-            </motion.p>
+            </p>
           )}
-        </motion.form>
+        </form>
       </motion.section>
 
         {/* Footer */}
