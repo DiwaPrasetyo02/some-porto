@@ -162,9 +162,11 @@
   right: 20px;
   background: rgba(13, 17, 23, 0.95) !important;
   border: 2px solid #ff006e;
-  color: #00f0ff !important;
-  width: 44px;
-  height: 44px;
+  color: #ffffff !important;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -172,22 +174,23 @@
   cursor: pointer;
   transition: all var(--transition-base);
   z-index: 1001;
-  font-size: 1.8rem;
-  font-weight: normal;
-  line-height: 1;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .modal-close:hover {
   background: #ff006e !important;
-  color: white !important;
+  color: #ffffff !important;
   border-color: #ff006e;
   transform: rotate(90deg) scale(1.1);
   box-shadow: 0 0 20px rgba(255, 0, 110, 0.8);
 }
 
 .modal-close svg {
-  width: 20px;
-  height: 20px;
+  width: 24px !important;
+  height: 24px !important;
+  display: block;
+  fill: currentColor;
 }
 
 .modal-image {
