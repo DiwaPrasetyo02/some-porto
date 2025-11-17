@@ -1,8 +1,28 @@
 .home {
   margin-top: 70px;
   min-height: 100vh;
-  background: transparent;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 30%, #0d1117 60%, #0a0e27 100%);
   position: relative;
+}
+
+.home::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(182, 0, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(255, 0, 110, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home > * {
+  position: relative;
+  z-index: 1;
 }
 
 section {
@@ -150,9 +170,9 @@ section h2::after {
 
 /* About Section - Cyberpunk Card */
 .about-section {
-  background: rgba(26, 31, 58, 0.8);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-xl);
+  background: rgba(10, 14, 39, 0.4);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.1);
   border-radius: var(--radius-2xl);
   border: 2px solid var(--color-primary);
   margin-top: 40px;
@@ -247,10 +267,10 @@ section h2::after {
 
 /* Stack Section - Cyberpunk Card */
 .stack-section {
-  background: rgba(26, 31, 58, 0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(10, 14, 39, 0.4);
+  backdrop-filter: blur(5px);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 4px 20px rgba(255, 0, 110, 0.1);
   border: 2px solid var(--color-secondary);
   margin-bottom: 80px;
   position: relative;
@@ -414,10 +434,10 @@ section h2::after {
 
 /* Projects Section - Cyberpunk Card */
 .projects-section {
-  background: rgba(26, 31, 58, 0.75);
-  backdrop-filter: blur(10px);
+  background: rgba(10, 14, 39, 0.4);
+  backdrop-filter: blur(5px);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 4px 20px rgba(182, 0, 255, 0.1);
   border: 2px solid var(--color-accent);
   margin-bottom: 80px;
   position: relative;
@@ -595,10 +615,10 @@ section h2::after {
 
 /* Experience Section - Cyberpunk Card */
 .experience-section {
-  background: rgba(26, 31, 58, 0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(10, 14, 39, 0.4);
+  backdrop-filter: blur(5px);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.1);
   border: 2px solid var(--color-primary);
   margin-bottom: 80px;
   position: relative;
@@ -665,10 +685,10 @@ section h2::after {
 
 /* Education Section - Cyberpunk Card */
 .education-section {
-  background: rgba(26, 31, 58, 0.75);
-  backdrop-filter: blur(10px);
+  background: rgba(10, 14, 39, 0.4);
+  backdrop-filter: blur(5px);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 4px 20px rgba(255, 0, 110, 0.1);
   border: 2px solid var(--color-secondary);
   margin-bottom: 80px;
   position: relative;
@@ -758,10 +778,10 @@ section h2::after {
 
 /* Contact Section - Cyberpunk Card */
 .contact-section {
-  background: rgba(26, 31, 58, 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(10, 14, 39, 0.4);
+  backdrop-filter: blur(5px);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 4px 20px rgba(182, 0, 255, 0.1);
   border: 2px solid var(--color-accent);
   margin-bottom: 80px;
   position: relative;
