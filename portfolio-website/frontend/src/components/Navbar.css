@@ -24,10 +24,6 @@
   pointer-events: none;
 }
 
-.navbar:hover::before {
-  opacity: 0.6;
-}
-
 .navbar-scrolled {
   background: rgba(10, 14, 39, 0.95);
   box-shadow: 0 4px 30px rgba(0, 240, 255, 0.4), 0 8px 60px rgba(182, 0, 255, 0.3);
