@@ -7,8 +7,7 @@
 
 .timeline-line {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 30px;
   width: 4px;
   height: 100%;
   background: linear-gradient(180deg,
@@ -27,19 +26,22 @@
 }
 
 .timeline-content {
-  width: 45%;
+  width: calc(100% - 80px);
   position: relative;
+  margin-left: 80px;
+  padding-left: 20px;
+  text-align: left;
 }
 
 .timeline-content.left {
-  margin-right: auto;
-  padding-right: 40px;
-  text-align: right;
+  margin-left: 80px;
+  padding-left: 20px;
+  text-align: left;
 }
 
 .timeline-content.right {
-  margin-left: auto;
-  padding-left: 40px;
+  margin-left: 80px;
+  padding-left: 20px;
   text-align: left;
 }
 
@@ -109,7 +111,7 @@
 }
 
 .timeline-content.left .timeline-card-meta {
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .view-details-btn {
@@ -135,7 +137,7 @@
 
 .timeline-dot {
   position: absolute;
-  left: 50%;
+  left: 30px;
   transform: translateX(-50%);
   width: 20px;
   height: 20px;
