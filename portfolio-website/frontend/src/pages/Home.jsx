@@ -4,6 +4,8 @@ import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt } 
 import { getAbout, getStack, getProjects, getExperience, getEducation, getSocialLinks, submitContact } from '../services/api';
 import Navbar from '../components/Navbar';
 import AnimatedBackground from '../components/AnimatedBackground';
+import ProjectCarousel from '../components/ProjectCarousel';
+import ExperienceTimeline from '../components/ExperienceTimeline';
 import { useTypingEffect } from '../hooks/useTypingEffect';
 import './Home.css';
 
@@ -280,59 +282,13 @@ const Home = () => {
           >
             Projects
           </motion.h2>
-          <div className="projects-grid">
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="project-card"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.15,
-                  ease: [0.25, 0.4, 0.25, 1]
-                }}
-              >
-                {project.image && (
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                  />
-                )}
-                <div className="project-content">
-                  <h3>{project.title}</h3>
-                  <p>{project.short_description || project.description}</p>
-                  <div className="project-links">
-                    {project.github_url && (
-                      <a href={project.github_url} target="_blank" rel="noopener noreferrer">
-                        <FaGithub /> GitHub
-                      </a>
-                    )}
-                    {project.live_url && (
-                      <a href={project.live_url} target="_blank" rel="noopener noreferrer">
-                        Live Demo
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <ProjectCarousel projects={projects} />
         </section>
       )}
 
       {/* Experience Section */}
       {experience.length > 0 && (
-        <motion.section
-          id="experience"
-          className="experience-section"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
-        >
+        <section id="experience" className="experience-section">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -341,29 +297,8 @@ const Home = () => {
           >
             Experience
           </motion.h2>
-          <div className="timeline">
-            {experience.map((exp, index) => (
-              <motion.div
-                key={exp.id}
-                className="timeline-item"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ x: 10 }}
-              >
-                <div className="timeline-content">
-                  <h3>{exp.position}</h3>
-                  <h4>{exp.company}</h4>
-                  <p className="timeline-date">
-                    {exp.start_date} - {exp.is_current ? 'Present' : exp.end_date}
-                  </p>
-                  <p>{exp.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+          <ExperienceTimeline experiences={experience} />
+        </section>
       )}
 
       {/* Education Section */}

@@ -1,0 +1,305 @@
+.carousel-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 60px;
+}
+
+.carousel-slide {
+  width: 100%;
+}
+
+.project-carousel-card {
+  background: rgba(13, 17, 23, 0.95);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-2xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 400px;
+}
+
+.project-carousel-image {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-gray-900);
+}
+
+.project-carousel-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-carousel-content {
+  padding: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-carousel-content h3 {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-md);
+  background: var(--color-primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.project-carousel-content p {
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--spacing-xl);
+  flex: 1;
+}
+
+.project-carousel-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 240, 255, 0.2);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.carousel-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-gray-900);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn-prev {
+  left: 0;
+}
+
+.carousel-btn-next {
+  right: 0;
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: var(--spacing-xl);
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.3);
+  border: 2px solid var(--color-primary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  padding: 0;
+}
+
+.indicator.active {
+  background: var(--color-primary);
+  box-shadow: var(--glow-cyan);
+  transform: scale(1.3);
+}
+
+.indicator:hover {
+  background: var(--color-primary-light);
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 14, 39, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: rgba(26, 31, 58, 0.98);
+  border-radius: var(--radius-2xl);
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 0, 110, 0.2);
+  border: 2px solid var(--color-secondary);
+  color: var(--color-secondary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  z-index: 10;
+}
+
+.modal-close:hover {
+  background: var(--color-secondary);
+  color: white;
+  transform: rotate(90deg);
+  box-shadow: 0 0 20px rgba(255, 0, 110, 0.8);
+}
+
+.modal-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+}
+
+.modal-body {
+  padding: var(--spacing-2xl);
+}
+
+.modal-body h2 {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-lg);
+  background: var(--color-primary-gradient-bold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-description {
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--spacing-xl);
+}
+
+.modal-technologies {
+  margin-bottom: var(--spacing-xl);
+}
+
+.modal-technologies h4 {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.1rem;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.tech-tag {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(182, 0, 255, 0.2));
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  color: var(--color-primary-light);
+  font-weight: 500;
+}
+
+.modal-links {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: var(--color-primary-gradient-bold);
+  border: 2px solid var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-cyan);
+}
+
+.btn-secondary {
+  background: rgba(0, 240, 255, 0.1);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--color-primary);
+  color: var(--color-gray-900);
+  box-shadow: var(--glow-cyan);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .project-carousel-card {
+    grid-template-columns: 1fr;
+  }
+
+  .carousel-container {
+    padding: 0 50px;
+  }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .carousel-container {
+    padding: 0 40px;
+  }
+
+  .project-carousel-content {
+    padding: var(--spacing-lg);
+  }
+
+  .modal-body {
+    padding: var(--spacing-lg);
+  }
+}
