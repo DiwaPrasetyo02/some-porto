@@ -7,7 +7,8 @@
 
 .timeline-line {
   position: absolute;
-  left: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 4px;
   height: 100%;
   background: linear-gradient(180deg,
@@ -26,22 +27,19 @@
 }
 
 .timeline-content {
-  width: calc(100% - 80px);
+  width: 45%;
   position: relative;
-  margin-left: 80px;
-  padding-left: 20px;
-  text-align: left;
 }
 
 .timeline-content.left {
-  margin-left: 80px;
-  padding-left: 20px;
-  text-align: left;
+  margin-right: auto;
+  padding-right: 40px;
+  text-align: right;
 }
 
 .timeline-content.right {
-  margin-left: 80px;
-  padding-left: 20px;
+  margin-left: auto;
+  padding-left: 40px;
   text-align: left;
 }
 
@@ -111,7 +109,7 @@
 }
 
 .timeline-content.left .timeline-card-meta {
-  align-items: flex-start;
+  align-items: flex-end;
 }
 
 .view-details-btn {
@@ -137,7 +135,7 @@
 
 .timeline-dot {
   position: absolute;
-  left: 30px;
+  left: 50%;
   transform: translateX(-50%);
   width: 20px;
   height: 20px;
@@ -208,7 +206,6 @@
   gap: var(--spacing-lg);
   padding: var(--spacing-2xl);
   background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(182, 0, 255, 0.1));
-  border-bottom: 2px solid var(--color-border);
 }
 
 .modal-icon {
@@ -281,6 +278,7 @@
 @media (max-width: 968px) {
   .timeline-line {
     left: 30px;
+    transform: none;
   }
 
   .timeline-node {
@@ -297,6 +295,7 @@
 
   .timeline-dot {
     left: 30px;
+    transform: translateX(-50%);
   }
 
   .timeline-card-meta {
