@@ -226,3 +226,62 @@ def create_admin(db: Session, username: str, hashed_password: str):
     db.commit()
     db.refresh(db_admin)
     return db_admin
+
+# Blog CRUD
+def get_blogs(db: Session, skip: int = 0, limit: int = 100, published_only: bool = False):
+    query = db.query(models.Blog)
+    if published_only:
+        query = query.filter(models.Blog.published == True)
+    return query.order_by(models.Blog.created_at.desc()).offset(skip).limit(limit).all()
+
+def get_blog_by_id(db: Session, blog_id: int):
+    return db.query(models.Blog).filter(models.Blog.id == blog_id).first()
+
+def get_blog_by_slug(db: Session, slug: str):
+    return db.query(models.Blog).filter(models.Blog.slug == slug).first()
+
+def create_blog(db: Session, blog: schemas.BlogCreate):
+    from datetime import datetime
+    blog_data = blog.dict()
+
+    # Set published_at if publishing for the first time
+    if blog_data.get('published') and not blog_data.get('published_at'):
+        blog_data['published_at'] = datetime.now()
+
+    db_blog = models.Blog(**blog_data)
+    db.add(db_blog)
+    db.commit()
+    db.refresh(db_blog)
+    return db_blog
+
+def update_blog(db: Session, blog_id: int, blog: schemas.BlogUpdate):
+    from datetime import datetime
+    db_blog = db.query(models.Blog).filter(models.Blog.id == blog_id).first()
+    if db_blog:
+        update_data = blog.dict(exclude_unset=True)
+
+        # Set published_at if publishing for the first time
+        if update_data.get('published') and not db_blog.published:
+            update_data['published_at'] = datetime.now()
+
+        for key, value in update_data.items():
+            setattr(db_blog, key, value)
+        db.commit()
+        db.refresh(db_blog)
+    return db_blog
+
+def delete_blog(db: Session, blog_id: int):
+    db_blog = db.query(models.Blog).filter(models.Blog.id == blog_id).first()
+    if db_blog:
+        db.delete(db_blog)
+        db.commit()
+        return True
+    return False
+
+def increment_blog_views(db: Session, blog_id: int):
+    db_blog = db.query(models.Blog).filter(models.Blog.id == blog_id).first()
+    if db_blog:
+        db_blog.views += 1
+        db.commit()
+        db.refresh(db_blog)
+    return db_blog

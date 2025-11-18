@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Routes, Route, NavLink } from 'react-router-dom';
-import { adminLogout, getAbout, getStack, getProjects, getExperience, getEducation, getSocialLinks, adminGetContacts } from '../../services/api';
-import { FaSignOutAlt, FaHome, FaUser, FaCode, FaProjectDiagram, FaBriefcase, FaGraduationCap, FaLink, FaEnvelope } from 'react-icons/fa';
+import { adminLogout, getAbout, getStack, getProjects, getExperience, getEducation, getSocialLinks, adminGetContacts, adminGetBlogs } from '../../services/api';
+import { FaSignOutAlt, FaHome, FaUser, FaCode, FaProjectDiagram, FaBriefcase, FaGraduationCap, FaLink, FaEnvelope, FaBlog } from 'react-icons/fa';
 import AboutManager from './managers/AboutManager';
 import StackManager from './managers/StackManager';
 import ProjectManager from './managers/ProjectManager';
@@ -9,6 +9,7 @@ import ExperienceManager from './managers/ExperienceManager';
 import EducationManager from './managers/EducationManager';
 import SocialLinkManager from './managers/SocialLinkManager';
 import ContactManager from './managers/ContactManager';
+import BlogManager from './managers/BlogManager';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -21,6 +22,7 @@ const AdminDashboard = () => {
     education: 0,
     socialLinks: 0,
     contacts: 0,
+    blogs: 0,
   });
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const AdminDashboard = () => {
 
   const loadStats = async () => {
     try {
-      const [aboutRes, stackRes, projectsRes, expRes, eduRes, socialRes, contactsRes] = await Promise.all([
+      const [aboutRes, stackRes, projectsRes, expRes, eduRes, socialRes, contactsRes, blogsRes] = await Promise.all([
         getAbout().catch(() => ({ data: null })),
         getStack().catch(() => ({ data: [] })),
         getProjects().catch(() => ({ data: [] })),
@@ -37,6 +39,7 @@ const AdminDashboard = () => {
         getEducation().catch(() => ({ data: [] })),
         getSocialLinks().catch(() => ({ data: [] })),
         adminGetContacts().catch(() => ({ data: [] })),
+        adminGetBlogs().catch(() => ({ data: [] })),
       ]);
 
       setStats({
@@ -47,6 +50,7 @@ const AdminDashboard = () => {
         education: eduRes.data.length,
         socialLinks: socialRes.data.length,
         contacts: contactsRes.data.filter(c => !c.is_read).length,
+        blogs: blogsRes.data.length,
       });
     } catch (error) {
       console.error('Error loading stats:', error);
@@ -97,6 +101,11 @@ const AdminDashboard = () => {
           <h3>Unread Contacts</h3>
           <p>{stats.contacts}</p>
         </div>
+        <div className="stat-card">
+          <FaBlog size={30} />
+          <h3>Blog Posts</h3>
+          <p>{stats.blogs}</p>
+        </div>
       </div>
     </div>
   );
@@ -129,6 +138,9 @@ const AdminDashboard = () => {
           <NavLink to="/admin/social-links" className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
             <FaLink /> Social Links
           </NavLink>
+          <NavLink to="/admin/blog" className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
+            <FaBlog /> Blog
+          </NavLink>
           <NavLink to="/admin/contacts" className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
             <FaEnvelope /> Contacts {stats.contacts > 0 && <span className="badge">{stats.contacts}</span>}
           </NavLink>
@@ -152,6 +164,7 @@ const AdminDashboard = () => {
           <Route path="experience" element={<ExperienceManager onUpdate={loadStats} />} />
           <Route path="education" element={<EducationManager onUpdate={loadStats} />} />
           <Route path="social-links" element={<SocialLinkManager onUpdate={loadStats} />} />
+          <Route path="blog" element={<BlogManager onUpdate={loadStats} />} />
           <Route path="contacts" element={<ContactManager onUpdate={loadStats} />} />
           <Route path="/" element={<DashboardHome />} />
         </Routes>

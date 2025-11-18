@@ -100,10 +100,27 @@ class SocialLink(Base):
 
 class Admin(Base):
     __tablename__ = "admin"
-    
+
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(100), unique=True, nullable=False)
     hashed_password = Column(String(500), nullable=False)
     email = Column(String(100))
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class Blog(Base):
+    __tablename__ = "blog"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(300), nullable=False)
+    slug = Column(String(350), unique=True, nullable=False, index=True)
+    excerpt = Column(String(500))
+    content = Column(Text, nullable=False)
+    featured_image = Column(String(500))
+    published = Column(Boolean, default=False)
+    tags = Column(String(500))  # comma-separated
+    author = Column(String(100))
+    views = Column(Integer, default=0)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    published_at = Column(DateTime(timezone=True))

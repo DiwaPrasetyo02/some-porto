@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './Navbar.css';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -14,6 +16,17 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleMenuClick = (item) => {
+    if (item.isRoute) {
+      // Navigate to route
+      navigate(`/${item.id}`);
+      setIsMobileMenuOpen(false);
+    } else {
+      // Scroll to section
+      scrollToSection(item.id);
+    }
+  };
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -30,6 +43,7 @@ const Navbar = () => {
     { id: 'projects', label: 'Projects' },
     { id: 'experience', label: 'Experience' },
     { id: 'education', label: 'Education' },
+    { id: 'blog', label: 'Blog', isRoute: true }, // Route to /blog page
     { id: 'contact', label: 'Contact' }
   ];
 
@@ -56,7 +70,7 @@ const Navbar = () => {
             <motion.button
               key={item.id}
               className="navbar-item"
-              onClick={() => scrollToSection(item.id)}
+              onClick={() => handleMenuClick(item)}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
