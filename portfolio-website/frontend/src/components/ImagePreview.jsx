@@ -17,10 +17,35 @@ const ImagePreview = ({ url, alt = 'Preview', className = '' }) => {
     // Handle different image URL formats
     let imageUrl = url.trim();
 
+    // Pinterest image handling - convert Pinterest URLs to direct image URLs
+    if (imageUrl.includes('pinterest.com') || imageUrl.includes('pin.it')) {
+      // Pinterest pins don't allow direct embedding without their API
+      // Show info message instead
+      setImageStatus('info');
+      setImageSrc(imageUrl);
+      return;
+    }
+
     // LinkedIn image handling - extract actual image URL from LinkedIn
     if (imageUrl.includes('linkedin.com') && !imageUrl.includes('/media/')) {
       // Try to convert profile URL to image URL pattern
       // This is a best-effort attempt; actual LinkedIn images may require authentication
+      setImageStatus('info');
+      setImageSrc(imageUrl);
+      return;
+    }
+
+    // Instagram image handling
+    if (imageUrl.includes('instagram.com') && !imageUrl.includes('.jpg') && !imageUrl.includes('.png')) {
+      // Instagram posts don't allow direct embedding without their API
+      setImageStatus('info');
+      setImageSrc(imageUrl);
+      return;
+    }
+
+    // Facebook image handling
+    if (imageUrl.includes('facebook.com') && !imageUrl.includes('.jpg') && !imageUrl.includes('.png')) {
+      // Facebook images may require authentication
       setImageStatus('info');
       setImageSrc(imageUrl);
       return;
@@ -101,6 +126,12 @@ const ImagePreview = ({ url, alt = 'Preview', className = '' }) => {
   }
 
   if (imageStatus === 'info') {
+    let platform = 'External';
+    if (url.includes('pinterest.com') || url.includes('pin.it')) platform = 'Pinterest';
+    else if (url.includes('linkedin.com')) platform = 'LinkedIn';
+    else if (url.includes('instagram.com')) platform = 'Instagram';
+    else if (url.includes('facebook.com')) platform = 'Facebook';
+
     return (
       <div className={`image-preview image-preview-info ${className}`}>
         <div className="image-preview-placeholder">
@@ -116,8 +147,8 @@ const ImagePreview = ({ url, alt = 'Preview', className = '' }) => {
             <line x1="12" y1="16" x2="12" y2="12" />
             <line x1="12" y1="8" x2="12.01" y2="8" />
           </svg>
-          <p>LinkedIn URL detected</p>
-          <small>Image preview may not be available for external profiles</small>
+          <p>{platform} URL detected</p>
+          <small>Direct image preview not available. Use direct image URLs from Imgur, Postimages, or similar services.</small>
         </div>
       </div>
     );
