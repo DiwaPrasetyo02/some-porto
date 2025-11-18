@@ -7,8 +7,12 @@
   background: rgba(10, 14, 39, 0.85);
   backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 2px solid var(--color-primary);
-  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3), 0 8px 40px rgba(182, 0, 255, 0.2);
+  box-shadow: none;
   transition: all var(--transition-base);
+}
+
+.navbar:hover {
+  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3), 0 8px 40px rgba(182, 0, 255, 0.2);
 }
 
 .navbar::before {
@@ -26,8 +30,12 @@
 
 .navbar-scrolled {
   background: rgba(10, 14, 39, 0.95);
-  box-shadow: 0 4px 30px rgba(0, 240, 255, 0.4), 0 8px 60px rgba(182, 0, 255, 0.3);
+  box-shadow: none;
   border-bottom-color: var(--color-primary-light);
+}
+
+.navbar-scrolled:hover {
+  box-shadow: 0 4px 30px rgba(0, 240, 255, 0.4), 0 8px 60px rgba(182, 0, 255, 0.3);
 }
 
 .navbar-container {
@@ -53,6 +61,11 @@
 .brand-icon {
   font-size: 1.8rem;
   animation: float 3s ease-in-out infinite;
+  filter: none;
+  transition: filter var(--transition-base);
+}
+
+.navbar-brand:hover .brand-icon {
   filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
 }
 
@@ -151,6 +164,10 @@
   background: var(--color-primary);
   transition: all var(--transition-base);
   border-radius: 2px;
+  box-shadow: none;
+}
+
+.mobile-menu-toggle:hover .hamburger {
   box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
 }
 
@@ -164,6 +181,11 @@
   background: var(--color-primary);
   transition: all var(--transition-base);
   border-radius: 2px;
+  box-shadow: none;
+}
+
+.mobile-menu-toggle:hover .hamburger::before,
+.mobile-menu-toggle:hover .hamburger::after {
   box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
 }
 
