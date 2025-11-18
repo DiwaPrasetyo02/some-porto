@@ -1,6 +1,7 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field, validator, HttpUrl
 from typing import Optional
 from datetime import datetime
+import re
 
 # About Schemas
 class AboutBase(BaseModel):
@@ -156,10 +157,10 @@ class Education(EducationBase):
 
 # Contact Schemas
 class ContactBase(BaseModel):
-    name: str
-    email: str
-    subject: Optional[str] = None
-    message: str
+    name: str = Field(..., max_length=200, min_length=1)
+    email: EmailStr
+    subject: Optional[str] = Field(None, max_length=300)
+    message: str = Field(..., max_length=5000, min_length=10)
 
 class ContactCreate(ContactBase):
     pass
@@ -201,9 +202,58 @@ class AdminLogin(BaseModel):
     username: str
     password: str
 
+class AdminPasswordChange(BaseModel):
+    password: str = Field(..., min_length=12)
+
+    @validator('password')
+    def validate_password_strength(cls, v):
+        if not re.search(r'[A-Z]', v):
+            raise ValueError('Password must contain at least one uppercase letter')
+        if not re.search(r'[a-z]', v):
+            raise ValueError('Password must contain at least one lowercase letter')
+        if not re.search(r'[0-9]', v):
+            raise ValueError('Password must contain at least one number')
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', v):
+            raise ValueError('Password must contain at least one special character')
+        return v
+
 class Token(BaseModel):
     access_token: str
     token_type: str
 
 class TokenData(BaseModel):
     username: Optional[str] = None
+
+# Blog Schemas
+class BlogBase(BaseModel):
+    title: str = Field(..., max_length=300, min_length=1)
+    slug: str = Field(..., max_length=350)
+    excerpt: Optional[str] = Field(None, max_length=500)
+    content: str = Field(..., min_length=1)
+    featured_image: Optional[HttpUrl] = None
+    published: bool = False
+    tags: Optional[str] = Field(None, max_length=500)  # comma-separated
+    author: Optional[str] = Field(None, max_length=100)
+
+class BlogCreate(BlogBase):
+    pass
+
+class BlogUpdate(BaseModel):
+    title: Optional[str] = Field(None, max_length=300, min_length=1)
+    slug: Optional[str] = Field(None, max_length=350)
+    excerpt: Optional[str] = Field(None, max_length=500)
+    content: Optional[str] = Field(None, min_length=1)
+    featured_image: Optional[HttpUrl] = None
+    published: Optional[bool] = None
+    tags: Optional[str] = Field(None, max_length=500)
+    author: Optional[str] = Field(None, max_length=100)
+
+class Blog(BlogBase):
+    id: int
+    views: int
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    published_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True

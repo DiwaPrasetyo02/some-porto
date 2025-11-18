@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Request, Response, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -6,6 +6,9 @@ from typing import List
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
 import models
 import schemas
@@ -24,36 +27,78 @@ load_dotenv()
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
 
+# Initialize rate limiter
+limiter = Limiter(key_func=get_remote_address)
+
 app = FastAPI(
     title="Portfolio API",
     description="Backend API for Portfolio Website with Admin Panel",
     version="1.0.0"
 )
 
+# Add rate limiter to app state
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# Security Headers Middleware
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    # Add HSTS only in production with HTTPS
+    if os.getenv("ENVIRONMENT") == "production":
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
+
 # CORS Configuration
-origins = [
-    os.getenv("FRONTEND_URL", "http://localhost:3000"),
-    "http://localhost:3000",
-    "http://localhost:5173",
-]
+# In production, use single origin. In development, allow multiple
+if os.getenv("ENVIRONMENT") == "production":
+    origins = [os.getenv("FRONTEND_URL")]
+else:
+    origins = [
+        os.getenv("FRONTEND_URL", "http://localhost:3000"),
+        "http://localhost:3000",
+        "http://localhost:5173",
+    ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization", "Set-Cookie"],
+    expose_headers=["Set-Cookie"],
 )
 
 # Initialize default admin on startup
 @app.on_event("startup")
 async def startup_event():
     db = next(get_db())
-    admin = crud.get_admin_by_username(db, os.getenv("ADMIN_USERNAME", "admin"))
+
+    # Security: Force users to set credentials in .env
+    admin_username = os.getenv("ADMIN_USERNAME")
+    admin_password = os.getenv("ADMIN_PASSWORD")
+
+    if not admin_username or not admin_password:
+        print("⚠️  WARNING: ADMIN_USERNAME and ADMIN_PASSWORD must be set in .env file!")
+        print("⚠️  Admin panel will not be accessible until credentials are configured.")
+        return
+
+    if admin_password in ["changeme123", "admin", "password", "123456"]:
+        raise ValueError(
+            "🚨 SECURITY ERROR: Weak password detected! "
+            "Set a strong ADMIN_PASSWORD in .env (min 12 chars, mix of upper, lower, numbers, symbols)"
+        )
+
+    admin = crud.get_admin_by_username(db, admin_username)
     if not admin:
-        hashed_password = get_password_hash(os.getenv("ADMIN_PASSWORD", "changeme123"))
-        crud.create_admin(db, os.getenv("ADMIN_USERNAME", "admin"), hashed_password)
-        print("Default admin created")
+        hashed_password = get_password_hash(admin_password)
+        crud.create_admin(db, admin_username, hashed_password)
+        print(f"✅ Admin created: {admin_username}")
+        print("🔒 Password is securely hashed in database")
 
 # Root endpoint
 @app.get("/")
@@ -102,15 +147,22 @@ def get_educations(skip: int = 0, limit: int = 100, db: Session = Depends(get_db
 def get_social_links(db: Session = Depends(get_db)):
     return crud.get_social_links(db)
 
-# Contact Form Route
+# Contact Form Route (Rate Limited to prevent spam)
 @app.post("/api/contact", response_model=schemas.Contact, status_code=status.HTTP_201_CREATED)
-def create_contact(contact: schemas.ContactCreate, db: Session = Depends(get_db)):
+@limiter.limit("5/minute")
+def create_contact(request: Request, contact: schemas.ContactCreate, db: Session = Depends(get_db)):
     return crud.create_contact(db, contact)
 
 # ============= ADMIN AUTHENTICATION =============
 
-@app.post("/api/admin/login", response_model=schemas.Token)
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+@app.post("/api/admin/login")
+@limiter.limit("5/minute")  # Prevent brute force attacks
+def login(
+    request: Request,
+    response: Response,
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db)
+):
     admin = crud.get_admin_by_username(db, form_data.username)
     if not admin or not verify_password(form_data.password, admin.hashed_password):
         raise HTTPException(
@@ -118,12 +170,27 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
+
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": admin.username}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+
+    # Set httpOnly cookie (more secure than localStorage)
+    response.set_cookie(
+        key="access_token",
+        value=f"Bearer {access_token}",
+        httponly=True,  # Prevents JavaScript access (XSS protection)
+        secure=os.getenv("ENVIRONMENT") == "production",  # HTTPS only in production
+        samesite="lax",  # CSRF protection
+        max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60,  # Convert to seconds
+    )
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "message": "Login successful. Token stored in secure httpOnly cookie."
+    }
 
 @app.get("/api/admin/verify")
 def verify_admin(current_admin: str = Depends(get_current_admin)):
@@ -336,6 +403,87 @@ def delete_contact_admin(
 ):
     if not crud.delete_contact(db, contact_id):
         raise HTTPException(status_code=404, detail="Contact not found")
+    return None
+
+# ============= ADMIN LOGOUT =============
+
+@app.post("/api/admin/logout")
+def logout(response: Response):
+    response.delete_cookie(key="access_token")
+    return {"message": "Logged out successfully"}
+
+# ============= BLOG ROUTES =============
+
+# Public Blog Routes
+@app.get("/api/blogs", response_model=List[schemas.Blog])
+def get_blogs(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(20, ge=1, le=100),
+    published_only: bool = True,
+    db: Session = Depends(get_db)
+):
+    return crud.get_blogs(db, skip=skip, limit=limit, published_only=published_only)
+
+@app.get("/api/blogs/{slug}", response_model=schemas.Blog)
+def get_blog_by_slug(slug: str, db: Session = Depends(get_db)):
+    blog = crud.get_blog_by_slug(db, slug)
+    if not blog:
+        raise HTTPException(status_code=404, detail="Blog post not found")
+
+    # Increment view count
+    crud.increment_blog_views(db, blog.id)
+
+    return blog
+
+# Admin Blog Routes
+@app.get("/api/admin/blogs", response_model=List[schemas.Blog])
+def get_all_blogs_admin(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(100, ge=1, le=100),
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(get_current_admin)
+):
+    return crud.get_blogs(db, skip=skip, limit=limit, published_only=False)
+
+@app.post("/api/admin/blogs", response_model=schemas.Blog, status_code=status.HTTP_201_CREATED)
+def create_blog_admin(
+    blog: schemas.BlogCreate,
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(get_current_admin)
+):
+    # Check if slug already exists
+    existing = crud.get_blog_by_slug(db, blog.slug)
+    if existing:
+        raise HTTPException(status_code=400, detail="Blog with this slug already exists")
+
+    return crud.create_blog(db, blog)
+
+@app.put("/api/admin/blogs/{blog_id}", response_model=schemas.Blog)
+def update_blog_admin(
+    blog_id: int,
+    blog: schemas.BlogUpdate,
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(get_current_admin)
+):
+    # Check if slug is being updated and already exists
+    if blog.slug:
+        existing = crud.get_blog_by_slug(db, blog.slug)
+        if existing and existing.id != blog_id:
+            raise HTTPException(status_code=400, detail="Blog with this slug already exists")
+
+    updated_blog = crud.update_blog(db, blog_id, blog)
+    if not updated_blog:
+        raise HTTPException(status_code=404, detail="Blog not found")
+    return updated_blog
+
+@app.delete("/api/admin/blogs/{blog_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_blog_admin(
+    blog_id: int,
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(get_current_admin)
+):
+    if not crud.delete_blog(db, blog_id):
+        raise HTTPException(status_code=404, detail="Blog not found")
     return None
 
 if __name__ == "__main__":
