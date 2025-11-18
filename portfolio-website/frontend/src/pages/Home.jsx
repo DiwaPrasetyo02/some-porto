@@ -261,7 +261,7 @@ const Home = () => {
                 {item.category && (
                   <span className="chip" title={item.category}>{item.category}</span>
                 )}
-                {item.description && <p>{item.description}</p>}
+                {item.description && <p style={{ whiteSpace: 'pre-line' }}>{item.description}</p>}
                 <div className="proficiency-bar">
                   <div
                     className="proficiency-fill"

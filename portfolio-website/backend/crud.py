@@ -90,7 +90,12 @@ def delete_project(db: Session, project_id: int):
 
 # Experience CRUD
 def get_experiences(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Experience).order_by(models.Experience.order_index).offset(skip).limit(limit).all()
+    # Sort by order_index (lower first), then by start_date (newest first)
+    # If order_index is 0, it will group together and sort by date descending
+    return db.query(models.Experience).order_by(
+        models.Experience.order_index,
+        models.Experience.start_date.desc()
+    ).offset(skip).limit(limit).all()
 
 def get_experience(db: Session, experience_id: int):
     return db.query(models.Experience).filter(models.Experience.id == experience_id).first()

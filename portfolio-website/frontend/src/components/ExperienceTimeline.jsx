@@ -6,6 +6,25 @@ import './ExperienceTimeline.css';
 const ExperienceTimeline = ({ experiences }) => {
   const [selectedExperience, setSelectedExperience] = useState(null);
 
+  // Format date from YYYY-MM-DD to readable format (e.g., "Jan 2020")
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '';
+
+    // Check if it's already in a readable format (contains letters)
+    if (/[a-zA-Z]/.test(dateStr)) return dateStr;
+
+    // Try to parse as ISO date
+    try {
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return dateStr; // Invalid date, return as-is
+
+      const options = { year: 'numeric', month: 'short' };
+      return date.toLocaleDateString('en-US', options);
+    } catch {
+      return dateStr; // Return original if parsing fails
+    }
+  };
+
   return (
     <>
       <div className="timeline-container">
@@ -32,7 +51,7 @@ const ExperienceTimeline = ({ experiences }) => {
                 </div>
                 <div className="timeline-card-meta">
                   <span className="date">
-                    <FaCalendar /> {exp.start_date} - {exp.end_date || 'Present'}
+                    <FaCalendar /> {formatDate(exp.start_date)} - {exp.end_date ? formatDate(exp.end_date) : 'Present'}
                   </span>
                   {exp.location && (
                     <span className="location">
@@ -95,7 +114,7 @@ const ExperienceTimeline = ({ experiences }) => {
                 <div className="experience-meta">
                   <div className="meta-item">
                     <FaCalendar />
-                    <span>{selectedExperience.start_date} - {selectedExperience.end_date || 'Present'}</span>
+                    <span>{formatDate(selectedExperience.start_date)} - {selectedExperience.end_date ? formatDate(selectedExperience.end_date) : 'Present'}</span>
                   </div>
                   {selectedExperience.location && (
                     <div className="meta-item">
@@ -108,7 +127,7 @@ const ExperienceTimeline = ({ experiences }) => {
                 {selectedExperience.description && (
                   <div className="experience-description">
                     <h4>Responsibilities & Achievements</h4>
-                    <p>{selectedExperience.description}</p>
+                    <p style={{ whiteSpace: 'pre-line' }}>{selectedExperience.description}</p>
                   </div>
                 )}
 

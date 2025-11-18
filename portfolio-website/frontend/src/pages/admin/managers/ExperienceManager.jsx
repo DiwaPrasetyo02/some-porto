@@ -107,11 +107,16 @@ const ExperienceManager = ({ onUpdate }) => {
               </div>
               <div className="form-group">
                 <label>Start Date</label>
-                <input type="text" value={formData.start_date || ''} onChange={(e) => setFormData({ ...formData, start_date: e.target.value })} placeholder="e.g., Jan 2020" />
+                <input type="date" value={formData.start_date || ''} onChange={(e) => setFormData({ ...formData, start_date: e.target.value })} />
               </div>
               <div className="form-group">
                 <label>End Date</label>
-                <input type="text" value={formData.end_date || ''} onChange={(e) => setFormData({ ...formData, end_date: e.target.value })} placeholder="e.g., Dec 2022" disabled={formData.is_current} />
+                <input type="date" value={formData.end_date || ''} onChange={(e) => setFormData({ ...formData, end_date: e.target.value })} disabled={formData.is_current} />
+              </div>
+              <div className="form-group">
+                <label>Order Index (lower numbers appear first)</label>
+                <input type="number" value={formData.order_index || 0} onChange={(e) => setFormData({ ...formData, order_index: parseInt(e.target.value) || 0 })} />
+                <small style={{ fontSize: '0.85em', color: '#888', marginTop: '4px', display: 'block' }}>Leave as 0 to auto-sort by date (newest first)</small>
               </div>
               <div className="form-group">
                 <label>Location</label>
