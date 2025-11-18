@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaPhone, FaMapMarkerAlt, FaFileDownload, FaInstagram, FaFacebook, FaPinterest, FaYoutube, FaGlobe, FaDribbble, FaBehance, FaMedium, FaStackOverflow, FaTiktok, FaWhatsapp, FaTelegram, FaDiscord, FaSlack, FaGoogleDrive } from 'react-icons/fa';
 import { getAbout, getStack, getProjects, getExperience, getEducation, getSocialLinks, submitContact } from '../services/api';
 import Navbar from '../components/Navbar';
 import ProjectCarousel from '../components/ProjectCarousel';
@@ -69,6 +69,27 @@ const Home = () => {
     GitHub: FaGithub,
     LinkedIn: FaLinkedin,
     Twitter: FaTwitter,
+    Instagram: FaInstagram,
+    Facebook: FaFacebook,
+    Pinterest: FaPinterest,
+    YouTube: FaYoutube,
+    Youtube: FaYoutube,
+    Dribbble: FaDribbble,
+    Behance: FaBehance,
+    Medium: FaMedium,
+    StackOverflow: FaStackOverflow,
+    'Stack Overflow': FaStackOverflow,
+    TikTok: FaTiktok,
+    Tiktok: FaTiktok,
+    WhatsApp: FaWhatsapp,
+    Whatsapp: FaWhatsapp,
+    Telegram: FaTelegram,
+    Discord: FaDiscord,
+    Slack: FaSlack,
+    'Google Drive': FaGoogleDrive,
+    Drive: FaGoogleDrive,
+    Website: FaGlobe,
+    Globe: FaGlobe,
   };
 
   return (
@@ -114,7 +135,9 @@ const Home = () => {
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
                 {socialLinks.map((link, index) => {
-                  const Icon = iconMap[link.platform] || FaGithub;
+                  const Icon = iconMap[link.platform] || FaGlobe;
+                  const hasCustomIcon = link.icon && link.icon.trim() !== '';
+
                   return (
                     <motion.a
                       key={link.id}
@@ -126,8 +149,22 @@ const Home = () => {
                       transition={{ duration: 0.4, delay: 1 + index * 0.1 }}
                       whileHover={{ scale: 1.2, rotate: 5 }}
                       whileTap={{ scale: 0.9 }}
+                      title={link.platform}
                     >
-                      <Icon size={28} />
+                      {hasCustomIcon ? (
+                        <img
+                          src={link.icon}
+                          alt={link.platform}
+                          style={{
+                            width: 28,
+                            height: 28,
+                            objectFit: 'contain',
+                            filter: 'brightness(0) invert(1)'
+                          }}
+                        />
+                      ) : (
+                        <Icon size={28} />
+                      )}
                     </motion.a>
                   );
                 })}
@@ -149,6 +186,18 @@ const Home = () => {
         >
           <h2>About Me</h2>
           <div className="about-content">
+            {about.profile_image && (
+              <div className="about-image">
+                <img
+                  src={about.profile_image}
+                  alt={about.title || 'Profile'}
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
             <div className="about-info">
               <p>{about.description}</p>
               {about.email && (
@@ -164,6 +213,18 @@ const Home = () => {
               {about.location && (
                 <div className="contact-info">
                   <FaMapMarkerAlt /> {about.location}
+                </div>
+              )}
+              {about.resume_url && (
+                <div className="contact-info">
+                  <a
+                    href={about.resume_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="resume-link"
+                  >
+                    <FaFileDownload /> Download Resume
+                  </a>
                 </div>
               )}
             </div>
