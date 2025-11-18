@@ -7,15 +7,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-});
-
-// Add token to requests if it exists
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('adminToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  withCredentials: true, // IMPORTANT: Send cookies with every request
 });
 
 // Public API calls
@@ -34,24 +26,22 @@ export const adminLogin = async (username, password) => {
   const formData = new FormData();
   formData.append('username', username);
   formData.append('password', password);
-  
+
+  // Token now stored in httpOnly cookie (automatic, more secure)
   const response = await api.post('/api/admin/login', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
-  
-  if (response.data.access_token) {
-    localStorage.setItem('adminToken', response.data.access_token);
-  }
-  
+
   return response;
 };
 
 export const adminVerify = () => api.get('/api/admin/verify');
 
-export const adminLogout = () => {
-  localStorage.removeItem('adminToken');
+export const adminLogout = async () => {
+  // Call backend to delete cookie
+  return api.post('/api/admin/logout');
 };
 
 // Admin CRUD - About
@@ -87,5 +77,16 @@ export const adminDeleteSocialLink = (id) => api.delete(`/api/admin/social-links
 export const adminGetContacts = () => api.get('/api/admin/contacts');
 export const adminMarkContactRead = (id) => api.put(`/api/admin/contacts/${id}/read`);
 export const adminDeleteContact = (id) => api.delete(`/api/admin/contacts/${id}`);
+
+// Public - Blog
+export const getBlogs = (skip = 0, limit = 20) =>
+  api.get(`/api/blogs?skip=${skip}&limit=${limit}&published_only=true`);
+export const getBlogBySlug = (slug) => api.get(`/api/blogs/${slug}`);
+
+// Admin CRUD - Blog
+export const adminGetBlogs = () => api.get('/api/admin/blogs');
+export const adminCreateBlog = (data) => api.post('/api/admin/blogs', data);
+export const adminUpdateBlog = (id, data) => api.put(`/api/admin/blogs/${id}`, data);
+export const adminDeleteBlog = (id) => api.delete(`/api/admin/blogs/${id}`);
 
 export default api;
