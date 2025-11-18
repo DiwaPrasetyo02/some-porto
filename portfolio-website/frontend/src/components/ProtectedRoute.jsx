@@ -8,20 +8,13 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem('adminToken');
-      
-      if (!token) {
-        setIsAuthenticated(false);
-        setLoading(false);
-        return;
-      }
-
+      // No need to check localStorage anymore - using httpOnly cookies
+      // Just try to verify with the backend (cookie will be sent automatically)
       try {
         await adminVerify();
         setIsAuthenticated(true);
       } catch (error) {
         setIsAuthenticated(false);
-        localStorage.removeItem('adminToken');
       } finally {
         setLoading(false);
       }
