@@ -27,11 +27,11 @@ def create_sample_data():
     
     try:
         # Create admin user if not exists
-        admin_username = os.getenv("ADMIN_USERNAME", "admin")
+        admin_username = os.getenv("ADMIN_USERNAME", "admin-diwa")
         admin = crud.get_admin_by_username(db, admin_username)
         if not admin:
             print(f"Creating admin user: {admin_username}")
-            hashed_password = get_password_hash(os.getenv("ADMIN_PASSWORD", "changeme123"))
+            hashed_password = get_password_hash(os.getenv("ADMIN_PASSWORD", "Ayam@Kampung123"))
             crud.create_admin(db, admin_username, hashed_password)
             print("✓ Admin user created")
         else:

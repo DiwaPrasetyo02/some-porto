@@ -48,3 +48,5 @@ PROJECT-SETUP.md
 START_HERE.md
 portfolio-website.tar.gz
 DELIVERY_SUMMARY.txt
+force_reset_admin.py
+update_admin_password.py
