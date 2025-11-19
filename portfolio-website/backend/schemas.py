@@ -230,10 +230,20 @@ class BlogBase(BaseModel):
     slug: str = Field(..., max_length=350)
     excerpt: Optional[str] = Field(None, max_length=500)
     content: str = Field(..., min_length=1)
-    featured_image: Optional[HttpUrl] = None
+    featured_image: Optional[str] = Field(None, max_length=500)
     published: bool = False
     tags: Optional[str] = Field(None, max_length=500)  # comma-separated
     author: Optional[str] = Field(None, max_length=100)
+
+    @validator('featured_image')
+    def validate_featured_image(cls, v):
+        # Allow empty string or None
+        if not v or v.strip() == '':
+            return None
+        # Basic URL validation
+        if not v.startswith(('http://', 'https://')):
+            raise ValueError('Featured image must be a valid URL starting with http:// or https://')
+        return v
 
 class BlogCreate(BlogBase):
     pass
@@ -243,10 +253,20 @@ class BlogUpdate(BaseModel):
     slug: Optional[str] = Field(None, max_length=350)
     excerpt: Optional[str] = Field(None, max_length=500)
     content: Optional[str] = Field(None, min_length=1)
-    featured_image: Optional[HttpUrl] = None
+    featured_image: Optional[str] = Field(None, max_length=500)
     published: Optional[bool] = None
     tags: Optional[str] = Field(None, max_length=500)
     author: Optional[str] = Field(None, max_length=100)
+
+    @validator('featured_image')
+    def validate_featured_image(cls, v):
+        # Allow empty string or None
+        if not v or v.strip() == '':
+            return None
+        # Basic URL validation
+        if not v.startswith(('http://', 'https://')):
+            raise ValueError('Featured image must be a valid URL starting with http:// or https://')
+        return v
 
 class Blog(BlogBase):
     id: int

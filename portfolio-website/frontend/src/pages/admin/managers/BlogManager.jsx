@@ -57,6 +57,11 @@ const BlogManager = ({ onUpdate }) => {
       const dataToSubmit = {
         ...formData,
         slug: formData.slug || generateSlug(formData.title),
+        // Convert empty strings to null for optional fields
+        excerpt: formData.excerpt?.trim() || null,
+        featured_image: formData.featured_image?.trim() || null,
+        tags: formData.tags?.trim() || null,
+        author: formData.author?.trim() || null,
       };
 
       if (editingItem) {
@@ -70,7 +75,8 @@ const BlogManager = ({ onUpdate }) => {
       loadBlogs();
       if (onUpdate) onUpdate();
     } catch (error) {
-      const message = error.response?.data?.detail || 'Failed to save blog';
+      console.error('Blog save error:', error);
+      const message = error.response?.data?.detail || error.message || 'Failed to save blog';
       showToast(message, 'error');
     } finally {
       setLoading(false);
